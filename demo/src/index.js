@@ -1,15 +1,16 @@
-import React, {Component} from 'react'
-import {render} from 'react-dom'
+import mirador from 'mirador';
 
-import Example from '../../src'
+import { miradorImageToolsPlugin } from '../../src'
 
-class Demo extends Component {
-  render() {
-    return <div>
-      <h1>mirador-image-tools Demo</h1>
-      <Example/>
-    </div>
-  }
+const config = {
+  id: 'demo',
+  windows: [{
+    loadedManifest: 'https://purl.stanford.edu/sn904cj3429/iiif/manifest'
+  }]
 }
 
-render(<Demo/>, document.querySelector('#demo'))
+console.log(miradorImageToolsPlugin);
+
+const miradorInstance = mirador.viewer(config, [
+  miradorImageToolsPlugin,
+]);
