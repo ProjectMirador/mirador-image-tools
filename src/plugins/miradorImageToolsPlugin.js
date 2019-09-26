@@ -56,7 +56,7 @@ class ImageTool extends Component {
         <Popper open={open} anchorEl={anchorEl} placement="bottom" style={{ zIndex: 100 }}>
           <div style={{ height: '150px' }}>
             <Slider
-              vertical="true"
+              orientation="vertical"
               min={min}
               max={max}
               value={value}
