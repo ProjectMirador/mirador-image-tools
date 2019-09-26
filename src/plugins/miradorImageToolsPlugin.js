@@ -7,7 +7,7 @@ import BrightnessIcon from '@material-ui/icons/Brightness5';
 import TonalityIcon from '@material-ui/icons/Tonality';
 import ContrastIcon from '@material-ui/icons/Camera';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
-import Slider from '@material-ui/lab/Slider';
+import Slider from '@material-ui/core/Slider';
 
 class ImageTool extends Component {
   constructor(props) {
@@ -56,7 +56,7 @@ class ImageTool extends Component {
         <Popper open={open} anchorEl={anchorEl} placement="bottom" style={{ zIndex: 100 }}>
           <div style={{ height: '150px' }}>
             <Slider
-              vertical
+              vertical="true"
               min={min}
               max={max}
               value={value}
