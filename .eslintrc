@@ -1,0 +1,5 @@
+{
+  "env": {},
+  "extends": ["airbnb", "plugin:jest/recommended"],
+  "plugins": ["jest"]
+}
