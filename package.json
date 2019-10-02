@@ -13,23 +13,39 @@
   "scripts": {
     "build": "nwb build-react-component",
     "clean": "nwb clean-module && nwb clean-demo",
+    "lint": "eslint ./src ./__tests__",
     "prepublishOnly": "npm run build",
     "start": "nwb serve-react-demo",
-    "test": "nwb test-react",
-    "test:coverage": "nwb test-react --coverage",
-    "test:watch": "nwb test-react --server"
+    "test": "npm run lint && jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch"
   },
-  "dependencies": {
-    "@material-ui/lab": "^3.0.0-alpha.30"
-  },
+  "dependencies": {},
   "peerDependencies": {
-    "mirador": "^3.0.0-alpha.5",
+    "mirador": "^3.0.0-alpha.16",
     "react": "16.x",
     "react-dom": "16.x"
   },
   "devDependencies": {
-    "mirador": "^3.0.0-alpha.5",
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.17.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "jest": "^24.9.0",
+    "mirador": "^3.0.0-alpha.16",
     "nwb": "0.23.x",
+    "nwb-sass": "^0.9.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },

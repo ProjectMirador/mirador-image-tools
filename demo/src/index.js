@@ -1,4 +1,4 @@
-import mirador from 'mirador';
+import Mirador from 'mirador/dist/es/src/index';
 
 import { miradorImageToolsPlugin } from '../../src'
 
@@ -16,6 +16,6 @@ const config = {
   }
 }
 
-const miradorInstance = mirador.viewer(config, [
+const miradorInstance = Mirador.viewer(config, [
   miradorImageToolsPlugin,
 ]);
