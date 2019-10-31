@@ -1,6 +1,6 @@
 {
   "name": "mirador-image-tools",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "mirador-image-tools React component",
   "main": "lib/index.js",
   "module": "es/index.js",
