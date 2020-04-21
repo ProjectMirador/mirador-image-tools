@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import BrightnessIcon from '@material-ui/icons/Brightness5';
 import TonalityIcon from '@material-ui/icons/Tonality';
+import GradientIcon from '@material-ui/icons/Gradient';
 import ContrastIcon from '@material-ui/icons/Camera';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import ImageTool from './ImageTool';
@@ -26,6 +27,13 @@ class MiradorImageTools extends Component {
               max={200}
             >
               <ContrastIcon />
+            </ImageTool>
+            <ImageTool
+              type="saturate"
+              label="Saturation"
+              max={200}
+            >
+              <GradientIcon />
             </ImageTool>
             <ImageTool
               type="grayscale"

@@ -17,6 +17,6 @@ describe('MiradorImageTools', () => {
   let wrapper;
   it('renders ImageTools', () => {
     wrapper = createWrapper();
-    expect(wrapper.find(ImageTool).length).toBe(4);
+    expect(wrapper.find(ImageTool).length).toBe(5);
   });
 });
