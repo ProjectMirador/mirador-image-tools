@@ -1,6 +1,6 @@
 import Mirador from 'mirador/dist/es/src/index';
-
-import { miradorImageToolsPlugin } from '../../src'
+import OSDReferencesPlugin from 'mirador/dist/es/src/plugins/OSDReferences';
+import { miradorImageToolsPlugin } from '../../src';
 
 const config = {
   id: 'demo',
@@ -16,6 +16,7 @@ const config = {
   }
 }
 
-const miradorInstance = Mirador.viewer(config, [
+Mirador.viewer(config, [
+  OSDReferencesPlugin,
   miradorImageToolsPlugin,
 ]);
