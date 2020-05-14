@@ -23,6 +23,7 @@ class MiradorImageTools extends Component {
               type="brightness"
               label="Brightness"
               max={200}
+              windowId={targetProps.windowId}
             >
               <BrightnessIcon />
             </ImageTool>
@@ -30,6 +31,7 @@ class MiradorImageTools extends Component {
               type="contrast"
               label="Contrast"
               max={200}
+              windowId={targetProps.windowId}
             >
               <ContrastIcon />
             </ImageTool>
@@ -37,6 +39,7 @@ class MiradorImageTools extends Component {
               type="saturate"
               label="Saturation"
               max={200}
+              windowId={targetProps.windowId}
             >
               <GradientIcon />
             </ImageTool>
@@ -44,6 +47,7 @@ class MiradorImageTools extends Component {
               type="grayscale"
               label="Greyscale"
               start={0}
+              windowId={targetProps.windowId}
             >
               <TonalityIcon />
             </ImageTool>
@@ -51,6 +55,7 @@ class MiradorImageTools extends Component {
               type="invert"
               label="Invert Colors"
               start={0}
+              windowId={targetProps.windowId}
             >
               <InvertColorsIcon />
             </ImageTool>
