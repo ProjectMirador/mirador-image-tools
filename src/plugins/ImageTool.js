@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
+import { OSDReferences } from 'mirador/dist/es/src/plugins/OSDReferences';
 import Popper from '@material-ui/core/Popper';
 import Slider from '@material-ui/core/Slider';
 
@@ -24,12 +25,12 @@ export default class ImageTool extends Component {
   }
 
   handleChange(e, val) {
-    const { type } = this.props;
+    const { type, windowId } = this.props;
     this.setState({
       value: val,
     });
-    const docs = document.getElementsByClassName('openseadragon-canvas');
-    const canvas = docs[0].getElementsByTagName('canvas')[0];
+    const osdReference = OSDReferences.get(windowId).current;
+    const { canvas } = osdReference.viewer;
     const currentFilters = canvas.style.filter.split(' ');
     const newFilters = currentFilters.filter((filter) => !filter.includes(type));
     newFilters.push(`${type}(${val}%)`);
@@ -74,6 +75,7 @@ ImageTool.propTypes = {
   open: PropTypes.bool,
   start: PropTypes.number,
   type: PropTypes.string.isRequired,
+  windowId: PropTypes.string.isRequired,
 };
 
 ImageTool.defaultProps = {

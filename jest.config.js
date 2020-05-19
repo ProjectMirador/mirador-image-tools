@@ -10,4 +10,8 @@ module.exports = {
   setupFiles: [
     '<rootDir>/setupJest.js',
   ],
+  // Ignore Mirador code from jest transforms
+  transformIgnorePatterns: [
+    '<rootDir>/node_modules/(?!mirador)',
+  ],
 };
