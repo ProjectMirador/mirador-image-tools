@@ -37,7 +37,14 @@ class MiradorImageTools extends Component {
           backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: 25, position: 'absolute', top: 8, right: 8,
         }}
         >
-          <div style={{ borderRight: '1px solid rgba(0, 0, 0, 0.2)', display: open ? 'inline-block' : 'none' }}>
+          <div style={{
+            border: 0,
+            borderRight: '1px solid rgba(0, 0, 0, 0.2)',
+            borderImageSlice: 1,
+            borderImageSource: 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.2) 20% 80%, rgba(0, 0, 0, 0) 80% )',
+            display: open ? 'inline-block' : 'none',
+          }}
+          >
             <ImageRotation
               label="Rotate"
               windowId={targetProps.windowId}
