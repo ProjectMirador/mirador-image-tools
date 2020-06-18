@@ -1,8 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import { OSDReferences } from 'mirador/dist/es/src/plugins/OSDReferences';
-import Popper from '@material-ui/core/Popper';
 import Slider from '@material-ui/core/Slider';
 
 export default class ImageTool extends Component {
@@ -16,10 +15,8 @@ export default class ImageTool extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(e) {
-    const { currentTarget } = e;
+  handleClick() {
     this.setState((state) => ({
-      anchorEl: currentTarget,
       open: !state.open,
     }));
   }
@@ -39,30 +36,41 @@ export default class ImageTool extends Component {
 
   render() {
     const {
-      children, label, min, max,
+      children, label, min, max, type, windowId,
     } = this.props;
-    const { value, open, anchorEl } = this.state;
+    const { value, open } = this.state;
+
+    const id = `${windowId}-${type}`;
 
     return (
-      <Fragment>
+      <div style={{ display: 'inline-block' }}>
         <MiradorMenuButton
+          id={`${id}-label`}
           aria-label={label}
           onClick={this.handleClick}
+          aria-expanded={open}
+          aria-controls={id}
+          style={{ backgroundColor: open && 'rgba(0, 0, 0, 0.1)' }}
         >
           {children}
         </MiradorMenuButton>
-        <Popper open={open} anchorEl={anchorEl} placement="bottom" style={{ zIndex: 100 }}>
-          <div style={{ height: '150px' }}>
-            <Slider
-              orientation="vertical"
-              min={min}
-              max={max}
-              value={value}
-              onChange={this.handleChange}
-            />
-          </div>
-        </Popper>
-      </Fragment>
+
+        <div
+          id={id}
+          aria-labelledby={`${id}-label`}
+          style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: 25, padding: 8, top: 48, marginTop: 2, position: 'absolute', display: open ? 'block' : 'none', height: '150px', zIndex: 100,
+          }}
+        >
+          <Slider
+            orientation="vertical"
+            min={min}
+            max={max}
+            value={value}
+            onChange={this.handleChange}
+          />
+        </div>
+      </div>
     );
   }
 }
