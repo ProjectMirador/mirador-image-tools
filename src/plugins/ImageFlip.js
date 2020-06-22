@@ -1,35 +1,44 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
-import RotateRightIcon from '@material-ui/icons/RotateRight';
+import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 
-export default class ImageRotation extends Component {
+export default class ImageFlip extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+    this.state = { flipped: null };
+  }
+
+  componentDidMount() {
+    const { viewer } = this.props;
+    this.setState({ flipped: viewer.viewport.getFlip() });
   }
 
   handleClick() {
     const { viewer } = this.props;
 
-    const currentRotation = viewer.viewport.getRotation();
-    viewer.viewport.setRotation((currentRotation + 90) % 360);
+    viewer.viewport.toggleFlip();
+    this.setState({ flipped: viewer.viewport.getFlip() });
   }
 
   render() {
     const { label } = this.props;
+    const { flipped } = this.state;
+
     return (
       <MiradorMenuButton
         aria-label={label}
         onClick={this.handleClick}
+        style={{ backgroundColor: flipped && 'rgba(0, 0, 0, 0.25)' }}
       >
-        <RotateRightIcon />
+        <SwapHorizIcon style={{ color: flipped && '#fff' }} />
       </MiradorMenuButton>
     );
   }
 }
 
-ImageRotation.propTypes = {
+ImageFlip.propTypes = {
   label: PropTypes.string.isRequired,
   viewer: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
