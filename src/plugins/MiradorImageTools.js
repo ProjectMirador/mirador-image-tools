@@ -10,6 +10,7 @@ import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import ImageTool from './ImageTool';
 import ImageRotation from './ImageRotation';
+import ImageFlip from './ImageFlip';
 
 class MiradorImageTools extends Component {
   constructor(props) {
@@ -56,6 +57,20 @@ class MiradorImageTools extends Component {
             windowId={windowId}
             viewer={viewer}
           />
+          <ImageFlip
+            label="Flip"
+            windowId={windowId}
+            viewer={viewer}
+          />
+        </div>
+        <div style={{
+          border: 0,
+          borderRight: '1px solid rgba(0, 0, 0, 0.2)',
+          borderImageSlice: 1,
+          borderImageSource: 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.2) 20% 80%, rgba(0, 0, 0, 0) 80% )',
+          display: open ? 'inline-block' : 'none',
+        }}
+        >
           <ImageTool
             type="brightness"
             label="Brightness"
