@@ -7,10 +7,8 @@ import ImageRotation from '../src/plugins/ImageRotation';
 function createWrapper(props) {
   return shallow(
     <MiradorImageTools
-      TargetComponent={'<div>hello</div>'}
-      targetProps={{
-        windowId: 'abc123',
-      }}
+      viewer={{}}
+      windowId="x"
       {...props}
     />,
   );

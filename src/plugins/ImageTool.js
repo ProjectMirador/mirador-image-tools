@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
-import { OSDReferences } from 'mirador/dist/es/src/plugins/OSDReferences';
 import Slider from '@material-ui/core/Slider';
 
 export default class ImageTool extends Component {
@@ -22,12 +21,11 @@ export default class ImageTool extends Component {
   }
 
   handleChange(e, val) {
-    const { type, windowId } = this.props;
+    const { type, viewer } = this.props;
     this.setState({
       value: val,
     });
-    const osdReference = OSDReferences.get(windowId).current;
-    const { canvas } = osdReference.viewer;
+    const { canvas } = viewer;
     const currentFilters = canvas.style.filter.split(' ');
     const newFilters = currentFilters.filter((filter) => !filter.includes(type));
     newFilters.push(`${type}(${val}%)`);
@@ -83,6 +81,7 @@ ImageTool.propTypes = {
   open: PropTypes.bool,
   start: PropTypes.number,
   type: PropTypes.string.isRequired,
+  viewer: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   windowId: PropTypes.string.isRequired,
 };
 

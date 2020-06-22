@@ -1,7 +1,7 @@
 import MiradorImageTools from './MiradorImageTools';
 
 export default {
-  target: 'WindowCanvasNavigationControls',
-  mode: 'wrap',
+  target: 'OpenSeadragonViewer',
+  mode: 'add',
   component: MiradorImageTools,
 };

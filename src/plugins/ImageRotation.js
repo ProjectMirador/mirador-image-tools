@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import RotateRightIcon from '@material-ui/icons/RotateRight';
-import { OSDReferences } from 'mirador/dist/es/src/plugins/OSDReferences';
 
 export default class ImageRotation extends Component {
   constructor(props) {
@@ -10,14 +9,11 @@ export default class ImageRotation extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  osdViewport() {
-    const { windowId } = this.props;
-    return OSDReferences.get(windowId).current.viewer.viewport;
-  }
-
   handleClick() {
-    const currentRotation = this.osdViewport().getRotation();
-    this.osdViewport().setRotation(currentRotation + 90);
+    const { viewer } = this.props;
+
+    const currentRotation = viewer.viewport.getRotation();
+    viewer.viewport.setRotation((currentRotation + 90) % 360);
   }
 
   render() {
@@ -35,5 +31,5 @@ export default class ImageRotation extends Component {
 
 ImageRotation.propTypes = {
   label: PropTypes.string.isRequired,
-  windowId: PropTypes.string.isRequired,
+  viewer: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
