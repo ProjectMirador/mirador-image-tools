@@ -8,6 +8,7 @@ export default class ImageTool extends Component {
     super(props);
     this.state = {
       open: props.open,
+      toggled: null,
       value: props.start,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -15,9 +16,20 @@ export default class ImageTool extends Component {
   }
 
   handleClick() {
-    this.setState((state) => ({
-      open: !state.open,
-    }));
+    const { variant } = this.props;
+    const { value } = this.state;
+    switch (variant) {
+      case 'toggle':
+        this.handleChange({}, value === 0 ? 100 : 0);
+        this.setState((state) => ({
+          toggled: !state.toggled,
+        }));
+        break;
+      default:
+        this.setState((state) => ({
+          open: !state.open,
+        }));
+    }
   }
 
   handleChange(e, val) {
@@ -34,9 +46,9 @@ export default class ImageTool extends Component {
 
   render() {
     const {
-      children, label, min, max, type, windowId,
+      children, label, max, min, type, windowId,
     } = this.props;
-    const { value, open } = this.state;
+    const { toggled, open, value } = this.state;
 
     const id = `${windowId}-${type}`;
 
@@ -48,7 +60,7 @@ export default class ImageTool extends Component {
           onClick={this.handleClick}
           aria-expanded={open}
           aria-controls={id}
-          style={{ backgroundColor: open && 'rgba(0, 0, 0, 0.1)' }}
+          style={{ backgroundColor: (open && 'rgba(0, 0, 0, 0.1)') || (toggled && 'rgba(0, 0, 0, 0.25)') }}
         >
           {children}
         </MiradorMenuButton>
@@ -81,6 +93,7 @@ ImageTool.propTypes = {
   open: PropTypes.bool,
   start: PropTypes.number,
   type: PropTypes.string.isRequired,
+  variant: PropTypes.string,
   viewer: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   windowId: PropTypes.string.isRequired,
 };
@@ -90,4 +103,5 @@ ImageTool.defaultProps = {
   max: 100,
   open: false,
   start: 100,
+  variant: 'slider',
 };

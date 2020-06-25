@@ -100,6 +100,7 @@ class MiradorImageTools extends Component {
           </ImageTool>
           <ImageTool
             type="grayscale"
+            variant="toggle"
             label="Greyscale"
             start={0}
             windowId={windowId}
@@ -109,6 +110,7 @@ class MiradorImageTools extends Component {
           </ImageTool>
           <ImageTool
             type="invert"
+            variant="toggle"
             label="Invert Colors"
             start={0}
             windowId={windowId}
