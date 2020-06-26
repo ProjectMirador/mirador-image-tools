@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import BrightnessIcon from '@material-ui/icons/Brightness5';
 import TonalityIcon from '@material-ui/icons/Tonality';
 import GradientIcon from '@material-ui/icons/Gradient';
-import ContrastIcon from '@material-ui/icons/Camera';
+import ContrastIcon from '@material-ui/icons/ExposureSharp';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import TuneSharpIcon from '@material-ui/icons/TuneSharp';
 import CloseSharpIcon from '@material-ui/icons/CloseSharp';
@@ -87,7 +87,7 @@ class MiradorImageTools extends Component {
             windowId={windowId}
             viewer={viewer}
           >
-            <ContrastIcon />
+            <ContrastIcon style={{ transform: 'rotate(180deg)' }} />
           </ImageTool>
           <ImageTool
             type="saturate"
