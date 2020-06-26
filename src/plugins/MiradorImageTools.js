@@ -29,10 +29,10 @@ class MiradorImageTools extends Component {
   }
 
   render() {
-    const { viewer, windowId } = this.props;
+    const { enabled, viewer, windowId } = this.props;
     const { open } = this.state;
 
-    if (!viewer) return null;
+    if (!viewer || !enabled) return null;
 
     return (
       <div style={{
@@ -131,12 +131,14 @@ class MiradorImageTools extends Component {
 }
 
 MiradorImageTools.propTypes = {
+  enabled: PropTypes.bool,
   open: PropTypes.bool,
   viewer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   windowId: PropTypes.string.isRequired,
 };
 
 MiradorImageTools.defaultProps = {
+  enabled: true,
   open: false,
   viewer: undefined,
 };
