@@ -139,7 +139,7 @@ MiradorImageTools.propTypes = {
 
 MiradorImageTools.defaultProps = {
   enabled: true,
-  open: false,
+  open: true,
   viewer: undefined,
 };
 
