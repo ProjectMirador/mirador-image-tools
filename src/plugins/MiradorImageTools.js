@@ -120,7 +120,7 @@ class MiradorImageTools extends Component {
           </ImageTool>
         </div>
         <MiradorMenuButton
-          aria-label={open ? 'Hide image tools' : 'Show image tools'}
+          aria-label={open ? 'Collapse image tools' : 'Expand image tools'}
           onClick={this.toggleState}
         >
           { open ? <CloseSharpIcon /> : <TuneSharpIcon /> }
