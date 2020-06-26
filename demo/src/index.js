@@ -4,6 +4,7 @@ import { miradorImageToolsPlugin } from '../../src';
 const config = {
   id: 'demo',
   windows: [{
+    imageToolsEnabled: true,
     manifestId: 'https://purl.stanford.edu/sn904cj3429/iiif/manifest',
   }],
   theme: {
@@ -16,5 +17,5 @@ const config = {
 };
 
 Mirador.viewer(config, [
-  miradorImageToolsPlugin,
+  ...miradorImageToolsPlugin,
 ]);
