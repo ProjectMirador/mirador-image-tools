@@ -26,10 +26,14 @@ const MiradorImageToolsMenuItem = ({
 };
 
 MiradorImageToolsMenuItem.propTypes = {
-  enabled: PropTypes.bool.isRequired,
+  enabled: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,
   updateWindow: PropTypes.func.isRequired,
   windowId: PropTypes.string.isRequired,
+};
+
+MiradorImageToolsMenuItem.defaultProps = {
+  enabled: true,
 };
 
 export default MiradorImageToolsMenuItem;
