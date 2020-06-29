@@ -16,6 +16,8 @@ class MiradorImageTools extends Component {
   constructor(props) {
     super(props);
     this.toggleState = this.toggleState.bind(this);
+    this.toggleRotate = this.toggleRotate.bind(this);
+    this.toggleFlip = this.toggleFlip.bind(this);
   }
 
   toggleState() {
@@ -24,9 +26,23 @@ class MiradorImageTools extends Component {
     updateWindow(windowId, { imageToolsOpen: !open });
   }
 
+  toggleRotate() {
+    const { updateViewport, viewConfig: { flip = false, rotation = 0 }, windowId } = this.props;
+
+    const offset = flip ? -90 : 90;
+
+    updateViewport(windowId, { rotation: (rotation + offset) % 360 });
+  }
+
+  toggleFlip() {
+    const { updateViewport, viewConfig: { flip = false }, windowId } = this.props;
+
+    updateViewport(windowId, { flip: !flip });
+  }
+
   render() {
     const {
-      enabled, open, viewer, windowId,
+      enabled, open, viewer, windowId, viewConfig: { flip = false },
     } = this.props;
 
     if (!viewer || !enabled) return null;
@@ -51,13 +67,12 @@ class MiradorImageTools extends Component {
         >
           <ImageRotation
             label="Rotate"
-            windowId={windowId}
-            viewer={viewer}
+            onClick={this.toggleRotate}
           />
           <ImageFlip
             label="Flip"
-            windowId={windowId}
-            viewer={viewer}
+            onClick={this.toggleFlip}
+            flipped={flip}
           />
         </div>
         <div style={{
@@ -130,8 +145,10 @@ class MiradorImageTools extends Component {
 MiradorImageTools.propTypes = {
   enabled: PropTypes.bool,
   open: PropTypes.bool,
+  updateViewport: PropTypes.func.isRequired,
   updateWindow: PropTypes.func.isRequired,
   viewer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  viewConfig: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   windowId: PropTypes.string.isRequired,
 };
 
@@ -139,6 +156,7 @@ MiradorImageTools.defaultProps = {
   enabled: true,
   open: true,
   viewer: undefined,
+  viewConfig: {},
 };
 
 export default MiradorImageTools;
