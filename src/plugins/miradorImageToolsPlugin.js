@@ -6,8 +6,12 @@ import MiradorImageToolsMenuItem from './MiradorImageToolsMenuItem';
 export default [
   {
     target: 'OpenSeadragonViewer',
+    mapDispatchToProps: {
+      updateWindow: actions.updateWindow,
+    },
     mapStateToProps: (state, { windowId }) => ({
       enabled: getWindowConfig(state, { windowId }).imageToolsEnabled,
+      open: getWindowConfig(state, { windowId }).imageToolsOpen,
     }),
     mode: 'add',
     component: MiradorImageTools,

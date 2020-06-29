@@ -15,22 +15,19 @@ import ImageFlip from './ImageFlip';
 class MiradorImageTools extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      open: props.open,
-    };
     this.toggleState = this.toggleState.bind(this);
   }
 
   toggleState() {
-    this.setState((state) => ({
-      open: !state.open,
-    }));
+    const { open, updateWindow, windowId } = this.props;
+
+    updateWindow(windowId, { imageToolsOpen: !open });
   }
 
   render() {
-    const { enabled, viewer, windowId } = this.props;
-    const { open } = this.state;
+    const {
+      enabled, open, viewer, windowId,
+    } = this.props;
 
     if (!viewer || !enabled) return null;
 
@@ -133,6 +130,7 @@ class MiradorImageTools extends Component {
 MiradorImageTools.propTypes = {
   enabled: PropTypes.bool,
   open: PropTypes.bool,
+  updateWindow: PropTypes.func.isRequired,
   viewer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   windowId: PropTypes.string.isRequired,
 };
