@@ -13,7 +13,9 @@ export default class ImageRotation extends Component {
     const { viewer } = this.props;
 
     const currentRotation = viewer.viewport.getRotation();
-    viewer.viewport.setRotation((currentRotation + 90) % 360);
+    const flipped = viewer.viewport.getFlip();
+    const offset = flipped ? -90 : 90;
+    viewer.viewport.setRotation((currentRotation + offset) % 360);
   }
 
   render() {
