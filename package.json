@@ -22,7 +22,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "mirador": "^3.0.0-beta.6",
+    "mirador": "^3.0.0-rc.2",
     "react": "16.x",
     "react-dom": "16.x"
   },
