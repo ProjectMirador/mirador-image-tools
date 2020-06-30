@@ -67,10 +67,10 @@ class MiradorImageTools extends Component {
     updateWindow(windowId, { imageToolsOpen: !open });
   }
 
-  toggleRotate() {
+  toggleRotate(value) {
     const { updateViewport, viewConfig: { flip = false, rotation = 0 }, windowId } = this.props;
 
-    const offset = flip ? -90 : 90;
+    const offset = flip ? -1 * value : value;
 
     updateViewport(windowId, { rotation: (rotation + offset) % 360 });
   }
@@ -135,8 +135,14 @@ class MiradorImageTools extends Component {
         }}
         >
           <ImageRotation
-            label="Rotate"
-            onClick={this.toggleRotate}
+            label="Rotate right"
+            onClick={() => this.toggleRotate(90)}
+            variant="right"
+          />
+          <ImageRotation
+            label="Rotate left"
+            onClick={() => this.toggleRotate(-90)}
+            variant="left"
           />
           <ImageFlip
             label="Flip"

@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import RotateRightIcon from '@material-ui/icons/RotateRight';
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 
 export default class ImageRotation extends Component {
   render() {
-    const { label, ...otherProps } = this.props;
+    const { label, variant, ...otherProps } = this.props;
     return (
       <MiradorMenuButton
         aria-label={label}
         {...otherProps}
       >
-        <RotateRightIcon />
+        { variant === 'left' ? <RotateLeftIcon /> : <RotateRightIcon /> }
       </MiradorMenuButton>
     );
   }
@@ -19,4 +20,5 @@ export default class ImageRotation extends Component {
 
 ImageRotation.propTypes = {
   label: PropTypes.string.isRequired,
+  variant: PropTypes.string.isRequired,
 };
