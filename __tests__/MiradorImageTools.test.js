@@ -9,6 +9,8 @@ function createWrapper(props) {
   return shallow(
     <MiradorImageTools
       viewer={{}}
+      updateViewport={() => {}}
+      updateWindow={() => {}}
       windowId="x"
       {...props}
     />,
