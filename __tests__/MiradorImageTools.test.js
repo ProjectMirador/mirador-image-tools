@@ -9,6 +9,8 @@ function createWrapper(props) {
   return shallow(
     <MiradorImageTools
       viewer={{}}
+      updateViewport={() => {}}
+      updateWindow={() => {}}
       windowId="x"
       {...props}
     />,
@@ -23,7 +25,7 @@ describe('MiradorImageTools', () => {
   });
   it('renders ImageRotation', () => {
     wrapper = createWrapper();
-    expect(wrapper.find(ImageRotation).length).toBe(1);
+    expect(wrapper.find(ImageRotation).length).toBe(2);
   });
   it('renders ImageFlip', () => {
     wrapper = createWrapper();

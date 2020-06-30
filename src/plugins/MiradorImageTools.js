@@ -7,6 +7,7 @@ import ContrastIcon from '@material-ui/icons/ExposureSharp';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import TuneSharpIcon from '@material-ui/icons/TuneSharp';
 import CloseSharpIcon from '@material-ui/icons/CloseSharp';
+import ReplaySharpIcon from '@material-ui/icons/ReplaySharp';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import ImageTool from './ImageTool';
 import ImageRotation from './ImageRotation';
@@ -16,6 +17,48 @@ class MiradorImageTools extends Component {
   constructor(props) {
     super(props);
     this.toggleState = this.toggleState.bind(this);
+    this.toggleRotate = this.toggleRotate.bind(this);
+    this.toggleFlip = this.toggleFlip.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleReset = this.handleReset.bind(this);
+  }
+
+  componentDidMount() {
+    const { viewer } = this.props;
+    if (viewer) this.applyFilters();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { viewConfig, viewer } = this.props;
+    if (viewer && viewConfig !== prevProps.viewConfig) this.applyFilters();
+  }
+
+  applyFilters() {
+    const {
+      viewConfig: {
+        brightness = 100,
+        contrast = 100,
+        saturate = 100,
+        grayscale = 0,
+        invert = 0,
+      },
+      viewer: { canvas },
+    } = this.props;
+
+    if (!canvas) return;
+
+    const controlledFilters = ['brightness', 'contrast', 'saturate', 'grayscale', 'invert'];
+
+    const currentFilters = canvas.style.filter.split(' ');
+    const newFilters = currentFilters.filter(
+      (filter) => !controlledFilters.some((type) => filter.includes(type)),
+    );
+    newFilters.push(`brightness(${brightness}%)`);
+    newFilters.push(`contrast(${contrast}%)`);
+    newFilters.push(`saturate(${saturate}%)`);
+    newFilters.push(`grayscale(${grayscale}%)`);
+    newFilters.push(`invert(${invert}%)`);
+    canvas.style.filter = newFilters.join(' ');
   }
 
   toggleState() {
@@ -24,9 +67,51 @@ class MiradorImageTools extends Component {
     updateWindow(windowId, { imageToolsOpen: !open });
   }
 
+  toggleRotate(value) {
+    const { updateViewport, viewConfig: { flip = false, rotation = 0 }, windowId } = this.props;
+
+    const offset = flip ? -1 * value : value;
+
+    updateViewport(windowId, { rotation: (rotation + offset) % 360 });
+  }
+
+  toggleFlip() {
+    const { updateViewport, viewConfig: { flip = false }, windowId } = this.props;
+
+    updateViewport(windowId, { flip: !flip });
+  }
+
+  handleChange(param) {
+    const { updateViewport, windowId } = this.props;
+    return (value) => updateViewport(windowId, { [param]: value });
+  }
+
+  handleReset() {
+    const { updateViewport, windowId } = this.props;
+    const viewConfig = {
+      rotation: 0,
+      flip: false,
+      brightness: 100,
+      contrast: 100,
+      saturate: 100,
+      grayscale: 0,
+      invert: 0,
+    };
+
+    updateViewport(windowId, viewConfig);
+  }
+
   render() {
     const {
       enabled, open, viewer, windowId,
+      viewConfig: {
+        flip = false,
+        brightness = 100,
+        contrast = 100,
+        saturate = 100,
+        grayscale = 0,
+        invert = 0,
+      },
     } = this.props;
 
     if (!viewer || !enabled) return null;
@@ -50,14 +135,19 @@ class MiradorImageTools extends Component {
         }}
         >
           <ImageRotation
-            label="Rotate"
-            windowId={windowId}
-            viewer={viewer}
+            label="Rotate right"
+            onClick={() => this.toggleRotate(90)}
+            variant="right"
+          />
+          <ImageRotation
+            label="Rotate left"
+            onClick={() => this.toggleRotate(-90)}
+            variant="left"
           />
           <ImageFlip
             label="Flip"
-            windowId={windowId}
-            viewer={viewer}
+            onClick={this.toggleFlip}
+            flipped={flip}
           />
         </div>
         <div style={{
@@ -73,7 +163,8 @@ class MiradorImageTools extends Component {
             label="Brightness"
             max={200}
             windowId={windowId}
-            viewer={viewer}
+            value={brightness}
+            onChange={this.handleChange('brightness')}
           >
             <BrightnessIcon />
           </ImageTool>
@@ -82,7 +173,8 @@ class MiradorImageTools extends Component {
             label="Contrast"
             max={200}
             windowId={windowId}
-            viewer={viewer}
+            value={contrast}
+            onChange={this.handleChange('contrast')}
           >
             <ContrastIcon style={{ transform: 'rotate(180deg)' }} />
           </ImageTool>
@@ -91,7 +183,8 @@ class MiradorImageTools extends Component {
             label="Saturation"
             max={200}
             windowId={windowId}
-            viewer={viewer}
+            value={saturate}
+            onChange={this.handleChange('saturate')}
           >
             <GradientIcon />
           </ImageTool>
@@ -99,9 +192,9 @@ class MiradorImageTools extends Component {
             type="grayscale"
             variant="toggle"
             label="Greyscale"
-            start={0}
             windowId={windowId}
-            viewer={viewer}
+            value={grayscale}
+            onChange={this.handleChange('grayscale')}
           >
             <TonalityIcon />
           </ImageTool>
@@ -109,12 +202,27 @@ class MiradorImageTools extends Component {
             type="invert"
             variant="toggle"
             label="Invert Colors"
-            start={0}
             windowId={windowId}
-            viewer={viewer}
+            value={invert}
+            onChange={this.handleChange('invert')}
           >
             <InvertColorsIcon />
           </ImageTool>
+        </div>
+        <div style={{
+          border: 0,
+          borderRight: '1px solid rgba(0, 0, 0, 0.2)',
+          borderImageSlice: 1,
+          borderImageSource: 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.2) 20% 80%, rgba(0, 0, 0, 0) 80% )',
+          display: open ? 'inline-block' : 'none',
+        }}
+        >
+          <MiradorMenuButton
+            aria-label="Revert image"
+            onClick={this.handleReset}
+          >
+            <ReplaySharpIcon />
+          </MiradorMenuButton>
         </div>
         <MiradorMenuButton
           aria-label={open ? 'Collapse image tools' : 'Expand image tools'}
@@ -130,8 +238,10 @@ class MiradorImageTools extends Component {
 MiradorImageTools.propTypes = {
   enabled: PropTypes.bool,
   open: PropTypes.bool,
+  updateViewport: PropTypes.func.isRequired,
   updateWindow: PropTypes.func.isRequired,
   viewer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  viewConfig: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   windowId: PropTypes.string.isRequired,
 };
 
@@ -139,6 +249,7 @@ MiradorImageTools.defaultProps = {
   enabled: true,
   open: true,
   viewer: undefined,
+  viewConfig: {},
 };
 
 export default MiradorImageTools;

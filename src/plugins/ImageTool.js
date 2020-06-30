@@ -8,22 +8,16 @@ export default class ImageTool extends Component {
     super(props);
     this.state = {
       open: props.open,
-      toggled: null,
-      value: props.start,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
-    const { variant } = this.props;
-    const { value } = this.state;
+    const { value, variant } = this.props;
     switch (variant) {
       case 'toggle':
         this.handleChange({}, value === 0 ? 100 : 0);
-        this.setState((state) => ({
-          toggled: !state.toggled,
-        }));
         break;
       default:
         this.setState((state) => ({
@@ -33,22 +27,17 @@ export default class ImageTool extends Component {
   }
 
   handleChange(e, val) {
-    const { type, viewer } = this.props;
-    this.setState({
-      value: val,
-    });
-    const { canvas } = viewer;
-    const currentFilters = canvas.style.filter.split(' ');
-    const newFilters = currentFilters.filter((filter) => !filter.includes(type));
-    newFilters.push(`${type}(${val}%)`);
-    canvas.style.filter = newFilters.join(' ');
+    const { onChange } = this.props;
+    onChange(val);
   }
 
   render() {
     const {
-      children, label, max, min, type, windowId,
+      children, label, max, min, value, type, variant, windowId,
     } = this.props;
-    const { toggled, open, value } = this.state;
+    const { open } = this.state;
+
+    const toggled = variant === 'toggle' && value > 0;
 
     const id = `${windowId}-${type}`;
 
@@ -90,11 +79,11 @@ ImageTool.propTypes = {
   label: PropTypes.string.isRequired,
   min: PropTypes.number,
   max: PropTypes.number,
+  onChange: PropTypes.func.isRequired,
   open: PropTypes.bool,
-  start: PropTypes.number,
   type: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
   variant: PropTypes.string,
-  viewer: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   windowId: PropTypes.string.isRequired,
 };
 
@@ -102,6 +91,5 @@ ImageTool.defaultProps = {
   min: 0,
   max: 100,
   open: false,
-  start: 100,
   variant: 'slider',
 };
