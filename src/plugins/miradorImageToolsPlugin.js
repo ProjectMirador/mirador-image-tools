@@ -11,8 +11,8 @@ export default [
       updateViewport: actions.updateViewport,
     },
     mapStateToProps: (state, { windowId }) => ({
-      enabled: getWindowConfig(state, { windowId }).imageToolsEnabled,
-      open: getWindowConfig(state, { windowId }).imageToolsOpen,
+      enabled: getWindowConfig(state, { windowId }).imageToolsEnabled || false,
+      open: getWindowConfig(state, { windowId }).imageToolsOpen || false,
       viewConfig: getViewer(state, { windowId }) || {},
     }),
     mode: 'add',
@@ -26,7 +26,7 @@ export default [
       updateWindow: actions.updateWindow,
     },
     mapStateToProps: (state, { windowId }) => ({
-      enabled: getWindowConfig(state, { windowId }).imageToolsEnabled,
+      enabled: getWindowConfig(state, { windowId }).imageToolsEnabled || false,
     }),
   },
 ];
