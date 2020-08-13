@@ -5,6 +5,13 @@ import ImageTool from '../src/plugins/ImageTool';
 import ImageRotation from '../src/plugins/ImageRotation';
 import ImageFlip from '../src/plugins/ImageFlip';
 
+const mockPalette = {
+  palette: {
+    shades: { main: 'rgb(255, 255, 255)' },
+    getContrastText: () => 'rgb(0, 0, 0)',
+  },
+};
+
 function createWrapper(props) {
   return shallow(
     <MiradorImageTools
@@ -12,6 +19,7 @@ function createWrapper(props) {
       updateViewport={() => {}}
       updateWindow={() => {}}
       windowId="x"
+      theme={mockPalette}
       {...props}
     />,
   );

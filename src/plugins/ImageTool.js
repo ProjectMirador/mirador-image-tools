@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import Slider from '@material-ui/core/Slider';
+import { changeAlpha } from './util';
 
 export default class ImageTool extends Component {
   constructor(props) {
@@ -34,12 +35,18 @@ export default class ImageTool extends Component {
   render() {
     const {
       children, label, max, min, value, type, variant, windowId,
+      backgroundColor, foregroundColor,
     } = this.props;
     const { open } = this.state;
 
     const toggled = variant === 'toggle' && value > 0;
 
     const id = `${windowId}-${type}`;
+
+    let bubbleBg;
+    if (open || toggled) {
+      bubbleBg = changeAlpha(foregroundColor, open ? 0.1 : 0.25);
+    }
 
     return (
       <div style={{ display: 'inline-block' }}>
@@ -49,7 +56,7 @@ export default class ImageTool extends Component {
           onClick={this.handleClick}
           aria-expanded={open}
           aria-controls={id}
-          style={{ backgroundColor: (open && 'rgba(0, 0, 0, 0.1)') || (toggled && 'rgba(0, 0, 0, 0.25)') }}
+          style={{ backgroundColor: bubbleBg }}
         >
           {children}
         </MiradorMenuButton>
@@ -57,8 +64,9 @@ export default class ImageTool extends Component {
         <div
           id={id}
           aria-labelledby={`${id}-label`}
+          className="MuiPaper-elevation4"
           style={{
-            backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: 25, padding: 8, top: 48, marginTop: 2, position: 'absolute', display: open ? 'block' : 'none', height: '150px', zIndex: 100,
+            backgroundColor: changeAlpha(backgroundColor, 0.8), borderRadius: 25, padding: 8, top: 48, marginTop: 2, position: 'absolute', display: open ? 'block' : 'none', height: '150px', zIndex: 100,
           }}
         >
           <Slider
@@ -75,7 +83,9 @@ export default class ImageTool extends Component {
 }
 
 ImageTool.propTypes = {
+  backgroundColor: PropTypes.string,
   children: PropTypes.node.isRequired,
+  foregroundColor: PropTypes.string,
   label: PropTypes.string.isRequired,
   min: PropTypes.number,
   max: PropTypes.number,
@@ -88,6 +98,8 @@ ImageTool.propTypes = {
 };
 
 ImageTool.defaultProps = {
+  backgroundColor: 'rgb(255, 255, 255)',
+  foregroundColor: 'rgb(0, 0, 0)',
   min: 0,
   max: 100,
   open: false,
