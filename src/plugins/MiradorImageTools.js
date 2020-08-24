@@ -9,10 +9,53 @@ import TuneSharpIcon from '@material-ui/icons/TuneSharp';
 import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import ReplaySharpIcon from '@material-ui/icons/ReplaySharp';
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import withStyles from '@material-ui/core/styles/withStyles';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import ImageTool from './ImageTool';
 import ImageRotation from './ImageRotation';
 import ImageFlip from './ImageFlip';
+
+/** Styles for withStyles HOC */
+const styles = ({ breakpoints, palette }) => {
+  const backgroundColor = palette.shades.main;
+  const foregroundColor = palette.getContrastText(backgroundColor);
+  const border = `1px solid ${fade(foregroundColor, 0.2)}`;
+  const borderImageRight = 'linear-gradient('
+    + 'to bottom, '
+    + `${fade(foregroundColor, 0)} 20%, `
+    + `${fade(foregroundColor, 0.2)} 20% 80%, `
+    + `${fade(foregroundColor, 0)} 80% )`;
+  const borderImageBottom = borderImageRight.replace('to bottom', 'to right');
+  return {
+    root: {
+      backgroundColor: fade(backgroundColor, 0.8),
+      borderRadius: 25,
+      position: 'absolute',
+      top: 8,
+      right: 8,
+      zIndex: 999,
+      display: 'flex',
+      flexDirection: 'row',
+      [breakpoints.down('sm')]: {
+        flexDirection: 'column',
+      },
+    },
+    container: {
+      border: 0,
+      borderRight: border,
+      borderImageSlice: 1,
+      borderImageSource: borderImageRight,
+      display: 'flex',
+      flexDirection: 'row',
+      [breakpoints.down('sm')]: {
+        flexDirection: 'column',
+        borderBottom: border,
+        borderRight: 'none',
+        borderImageSource: borderImageBottom,
+      },
+    },
+  };
+};
 
 class MiradorImageTools extends Component {
   constructor(props) {
@@ -104,7 +147,7 @@ class MiradorImageTools extends Component {
 
   render() {
     const {
-      enabled, open, viewer, windowId,
+      classes, enabled, open, viewer, windowId,
       theme: { palette },
       viewConfig: {
         flip = false,
@@ -120,133 +163,97 @@ class MiradorImageTools extends Component {
 
     const backgroundColor = palette.shades.main;
     const foregroundColor = palette.getContrastText(backgroundColor);
-    const borderRight = `1px solid ${fade(foregroundColor, 0.2)}`;
-    const borderImageSource = 'linear-gradient('
-      + 'to bottom, '
-      + `${fade(foregroundColor, 0)} 20%, `
-      + `${fade(foregroundColor, 0.2)} 20% 80%, `
-      + `${fade(foregroundColor, 0)} 80% )`;
 
     return (
-      <div
-        className="MuiPaper-elevation4"
-        style={{
-          backgroundColor: fade(backgroundColor, 0.8),
-          borderRadius: 25,
-          position: 'absolute',
-          top: 8,
-          right: 8,
-          zIndex: 999,
-        }}
-      >
-        <div style={{
-          border: 0,
-          borderRight,
-          borderImageSlice: 1,
-          borderImageSource,
-          display: open ? 'inline-block' : 'none',
-        }}
-        >
-          <ImageRotation
-            label="Rotate right"
-            onClick={() => this.toggleRotate(90)}
-            variant="right"
-          />
-          <ImageRotation
-            label="Rotate left"
-            onClick={() => this.toggleRotate(-90)}
-            variant="left"
-          />
-          <ImageFlip
-            label="Flip"
-            onClick={this.toggleFlip}
-            flipped={flip}
-          />
-        </div>
-        <div style={{
-          border: 0,
-          borderRight,
-          borderImageSlice: 1,
-          borderImageSource,
-          display: open ? 'inline-block' : 'none',
-        }}
-        >
-          <ImageTool
-            type="brightness"
-            label="Brightness"
-            max={200}
-            windowId={windowId}
-            value={brightness}
-            backgroundColor={backgroundColor}
-            foregroundColor={foregroundColor}
-            onChange={this.handleChange('brightness')}
-          >
-            <BrightnessIcon />
-          </ImageTool>
-          <ImageTool
-            type="contrast"
-            label="Contrast"
-            max={200}
-            windowId={windowId}
-            value={contrast}
-            backgroundColor={backgroundColor}
-            foregroundColor={foregroundColor}
-            onChange={this.handleChange('contrast')}
-          >
-            <ContrastIcon style={{ transform: 'rotate(180deg)' }} />
-          </ImageTool>
-          <ImageTool
-            type="saturate"
-            label="Saturation"
-            max={200}
-            windowId={windowId}
-            value={saturate}
-            backgroundColor={backgroundColor}
-            foregroundColor={foregroundColor}
-            onChange={this.handleChange('saturate')}
-          >
-            <GradientIcon />
-          </ImageTool>
-          <ImageTool
-            type="grayscale"
-            variant="toggle"
-            label="Greyscale"
-            windowId={windowId}
-            value={grayscale}
-            backgroundColor={backgroundColor}
-            foregroundColor={foregroundColor}
-            onChange={this.handleChange('grayscale')}
-          >
-            <TonalityIcon />
-          </ImageTool>
-          <ImageTool
-            type="invert"
-            variant="toggle"
-            label="Invert Colors"
-            windowId={windowId}
-            value={invert}
-            backgroundColor={backgroundColor}
-            foregroundColor={foregroundColor}
-            onChange={this.handleChange('invert')}
-          >
-            <InvertColorsIcon />
-          </ImageTool>
-        </div>
-        <div style={{
-          border: 0,
-          borderRight,
-          borderImageSlice: 1,
-          borderImageSource,
-          display: open ? 'inline-block' : 'none',
-        }}
-        >
-          <MiradorMenuButton
-            aria-label="Revert image"
-            onClick={this.handleReset}
-          >
-            <ReplaySharpIcon />
-          </MiradorMenuButton>
-        </div>
+      <div className={`MuiPaper-elevation4 ${classes.root}`}>
+        {open
+        && (
+        <React.Fragment>
+          <div className={classes.container}>
+            <ImageRotation
+              label="Rotate right"
+              onClick={() => this.toggleRotate(90)}
+              variant="right"
+            />
+            <ImageRotation
+              label="Rotate left"
+              onClick={() => this.toggleRotate(-90)}
+              variant="left"
+            />
+            <ImageFlip
+              label="Flip"
+              onClick={this.toggleFlip}
+              flipped={flip}
+            />
+          </div>
+          <div className={classes.container}>
+            <ImageTool
+              type="brightness"
+              label="Brightness"
+              max={200}
+              windowId={windowId}
+              value={brightness}
+              foregroundColor={foregroundColor}
+              onChange={this.handleChange('brightness')}
+            >
+              <BrightnessIcon />
+            </ImageTool>
+            <ImageTool
+              type="contrast"
+              label="Contrast"
+              max={200}
+              windowId={windowId}
+              value={contrast}
+              foregroundColor={foregroundColor}
+              onChange={this.handleChange('contrast')}
+            >
+              <ContrastIcon style={{ transform: 'rotate(180deg)' }} />
+            </ImageTool>
+            <ImageTool
+              type="saturate"
+              label="Saturation"
+              max={200}
+              windowId={windowId}
+              value={saturate}
+              foregroundColor={foregroundColor}
+              onChange={this.handleChange('saturate')}
+            >
+              <GradientIcon />
+            </ImageTool>
+            <ImageTool
+              type="grayscale"
+              variant="toggle"
+              label="Greyscale"
+              windowId={windowId}
+              value={grayscale}
+              backgroundColor={backgroundColor}
+              foregroundColor={foregroundColor}
+              onChange={this.handleChange('grayscale')}
+            >
+              <TonalityIcon />
+            </ImageTool>
+            <ImageTool
+              type="invert"
+              variant="toggle"
+              label="Invert Colors"
+              windowId={windowId}
+              value={invert}
+              foregroundColor={foregroundColor}
+              onChange={this.handleChange('invert')}
+            >
+              <InvertColorsIcon />
+            </ImageTool>
+          </div>
+          <div className={classes.container}>
+            <MiradorMenuButton
+              aria-label="Revert image"
+              onClick={this.handleReset}
+            >
+              <ReplaySharpIcon />
+            </MiradorMenuButton>
+          </div>
+        </React.Fragment>
+        )}
         <MiradorMenuButton
           aria-label={open ? 'Collapse image tools' : 'Expand image tools'}
           onClick={this.toggleState}
@@ -259,6 +266,7 @@ class MiradorImageTools extends Component {
 }
 
 MiradorImageTools.propTypes = {
+  classes: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   enabled: PropTypes.bool,
   open: PropTypes.bool,
   theme: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -276,4 +284,4 @@ MiradorImageTools.defaultProps = {
   viewConfig: {},
 };
 
-export default MiradorImageTools;
+export default withStyles(styles)(MiradorImageTools);
