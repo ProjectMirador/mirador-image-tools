@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import Slider from '@material-ui/core/Slider';
-import { changeAlpha } from './util';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
 export default class ImageTool extends Component {
   constructor(props) {
@@ -45,7 +45,7 @@ export default class ImageTool extends Component {
 
     let bubbleBg;
     if (open || toggled) {
-      bubbleBg = changeAlpha(foregroundColor, open ? 0.1 : 0.25);
+      bubbleBg = fade(foregroundColor, open ? 0.1 : 0.25);
     }
 
     return (
@@ -66,7 +66,7 @@ export default class ImageTool extends Component {
           aria-labelledby={`${id}-label`}
           className="MuiPaper-elevation4"
           style={{
-            backgroundColor: changeAlpha(backgroundColor, 0.8), borderRadius: 25, padding: 8, top: 48, marginTop: 2, position: 'absolute', display: open ? 'block' : 'none', height: '150px', zIndex: 100,
+            backgroundColor: fade(backgroundColor, 0.8), borderRadius: 25, padding: 8, top: 48, marginTop: 2, position: 'absolute', display: open ? 'block' : 'none', height: '150px', zIndex: 100,
           }}
         >
           <Slider

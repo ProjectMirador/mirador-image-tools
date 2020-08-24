@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
-import { changeAlpha } from './util';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
 export default class ImageFlip extends Component {
   render() {
@@ -13,7 +13,7 @@ export default class ImageFlip extends Component {
     return (
       <MiradorMenuButton
         aria-label={label}
-        style={{ backgroundColor: flipped && changeAlpha(foregroundColor, 0.25) }}
+        style={{ backgroundColor: flipped && fade(foregroundColor, 0.25) }}
         {...otherProps}
       >
         <SwapHorizIcon style={{ color: flipped && backgroundColor }} />

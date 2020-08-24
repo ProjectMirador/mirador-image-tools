@@ -8,11 +8,11 @@ import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import TuneSharpIcon from '@material-ui/icons/TuneSharp';
 import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import ReplaySharpIcon from '@material-ui/icons/ReplaySharp';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import ImageTool from './ImageTool';
 import ImageRotation from './ImageRotation';
 import ImageFlip from './ImageFlip';
-import { changeAlpha } from './util';
 
 class MiradorImageTools extends Component {
   constructor(props) {
@@ -120,18 +120,18 @@ class MiradorImageTools extends Component {
 
     const backgroundColor = palette.shades.main;
     const foregroundColor = palette.getContrastText(backgroundColor);
-    const borderRight = `1px solid ${changeAlpha(foregroundColor, 0.2)}`;
+    const borderRight = `1px solid ${fade(foregroundColor, 0.2)}`;
     const borderImageSource = 'linear-gradient('
       + 'to bottom, '
-      + `${changeAlpha(foregroundColor, 0)} 20%, `
-      + `${changeAlpha(foregroundColor, 0.2)} 20% 80%, `
-      + `${changeAlpha(foregroundColor, 0)} 80% )`;
+      + `${fade(foregroundColor, 0)} 20%, `
+      + `${fade(foregroundColor, 0.2)} 20% 80%, `
+      + `${fade(foregroundColor, 0)} 80% )`;
 
     return (
       <div
         className="MuiPaper-elevation4"
         style={{
-          backgroundColor: changeAlpha(backgroundColor, 0.8),
+          backgroundColor: fade(backgroundColor, 0.8),
           borderRadius: 25,
           position: 'absolute',
           top: 8,
