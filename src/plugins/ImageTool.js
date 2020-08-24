@@ -12,9 +12,9 @@ const styles = ({ palette, breakpoints }) => ({
   slider: {
     backgroundColor: fade(palette.shades.main, 0.8),
     borderRadius: 25,
-    padding: 8,
     top: 48,
     marginTop: 2,
+    padding: '2px',
     position: 'absolute',
     height: '150px',
     zIndex: 100,
@@ -24,6 +24,8 @@ const styles = ({ palette, breakpoints }) => ({
       width: '150px',
       height: 'auto',
       marginTop: -46,
+      marginRight: 2,
+      padding: '0px 2px 0px 2px',
     },
   },
 });
