@@ -8,6 +8,7 @@ import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import TuneSharpIcon from '@material-ui/icons/TuneSharp';
 import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import ReplaySharpIcon from '@material-ui/icons/ReplaySharp';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import ImageTool from './ImageTool';
 import ImageRotation from './ImageRotation';
@@ -104,6 +105,7 @@ class MiradorImageTools extends Component {
   render() {
     const {
       enabled, open, viewer, windowId,
+      theme: { palette },
       viewConfig: {
         flip = false,
         brightness = 100,
@@ -116,21 +118,32 @@ class MiradorImageTools extends Component {
 
     if (!viewer || !enabled) return null;
 
+    const backgroundColor = palette.shades.main;
+    const foregroundColor = palette.getContrastText(backgroundColor);
+    const borderRight = `1px solid ${fade(foregroundColor, 0.2)}`;
+    const borderImageSource = 'linear-gradient('
+      + 'to bottom, '
+      + `${fade(foregroundColor, 0)} 20%, `
+      + `${fade(foregroundColor, 0.2)} 20% 80%, `
+      + `${fade(foregroundColor, 0)} 80% )`;
+
     return (
-      <div style={{
-        backgroundColor: 'rgba(255, 255, 255, 0.8)',
-        borderRadius: 25,
-        position: 'absolute',
-        top: 8,
-        right: 8,
-        zIndex: 999,
-      }}
+      <div
+        className="MuiPaper-elevation4"
+        style={{
+          backgroundColor: fade(backgroundColor, 0.8),
+          borderRadius: 25,
+          position: 'absolute',
+          top: 8,
+          right: 8,
+          zIndex: 999,
+        }}
       >
         <div style={{
           border: 0,
-          borderRight: '1px solid rgba(0, 0, 0, 0.2)',
+          borderRight,
           borderImageSlice: 1,
-          borderImageSource: 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.2) 20% 80%, rgba(0, 0, 0, 0) 80% )',
+          borderImageSource,
           display: open ? 'inline-block' : 'none',
         }}
         >
@@ -152,9 +165,9 @@ class MiradorImageTools extends Component {
         </div>
         <div style={{
           border: 0,
-          borderRight: '1px solid rgba(0, 0, 0, 0.2)',
+          borderRight,
           borderImageSlice: 1,
-          borderImageSource: 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.2) 20% 80%, rgba(0, 0, 0, 0) 80% )',
+          borderImageSource,
           display: open ? 'inline-block' : 'none',
         }}
         >
@@ -164,6 +177,8 @@ class MiradorImageTools extends Component {
             max={200}
             windowId={windowId}
             value={brightness}
+            backgroundColor={backgroundColor}
+            foregroundColor={foregroundColor}
             onChange={this.handleChange('brightness')}
           >
             <BrightnessIcon />
@@ -174,6 +189,8 @@ class MiradorImageTools extends Component {
             max={200}
             windowId={windowId}
             value={contrast}
+            backgroundColor={backgroundColor}
+            foregroundColor={foregroundColor}
             onChange={this.handleChange('contrast')}
           >
             <ContrastIcon style={{ transform: 'rotate(180deg)' }} />
@@ -184,6 +201,8 @@ class MiradorImageTools extends Component {
             max={200}
             windowId={windowId}
             value={saturate}
+            backgroundColor={backgroundColor}
+            foregroundColor={foregroundColor}
             onChange={this.handleChange('saturate')}
           >
             <GradientIcon />
@@ -194,6 +213,8 @@ class MiradorImageTools extends Component {
             label="Greyscale"
             windowId={windowId}
             value={grayscale}
+            backgroundColor={backgroundColor}
+            foregroundColor={foregroundColor}
             onChange={this.handleChange('grayscale')}
           >
             <TonalityIcon />
@@ -204,6 +225,8 @@ class MiradorImageTools extends Component {
             label="Invert Colors"
             windowId={windowId}
             value={invert}
+            backgroundColor={backgroundColor}
+            foregroundColor={foregroundColor}
             onChange={this.handleChange('invert')}
           >
             <InvertColorsIcon />
@@ -211,9 +234,9 @@ class MiradorImageTools extends Component {
         </div>
         <div style={{
           border: 0,
-          borderRight: '1px solid rgba(0, 0, 0, 0.2)',
+          borderRight,
           borderImageSlice: 1,
-          borderImageSource: 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.2) 20% 80%, rgba(0, 0, 0, 0) 80% )',
+          borderImageSource,
           display: open ? 'inline-block' : 'none',
         }}
         >
@@ -238,6 +261,7 @@ class MiradorImageTools extends Component {
 MiradorImageTools.propTypes = {
   enabled: PropTypes.bool,
   open: PropTypes.bool,
+  theme: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   updateViewport: PropTypes.func.isRequired,
   updateWindow: PropTypes.func.isRequired,
   viewer: PropTypes.object, // eslint-disable-line react/forbid-prop-types

@@ -1,3 +1,4 @@
+import withTheme from '@material-ui/core/styles/withTheme';
 import * as actions from 'mirador/dist/es/src/state/actions';
 import { getWindowConfig, getViewer } from 'mirador/dist/es/src/state/selectors';
 import MiradorImageTools from './MiradorImageTools';
@@ -16,7 +17,7 @@ export default [
       viewConfig: getViewer(state, { windowId }) || {},
     }),
     mode: 'add',
-    component: MiradorImageTools,
+    component: withTheme(MiradorImageTools),
   },
   {
     target: 'WindowTopBarPluginMenu',
