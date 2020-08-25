@@ -95,7 +95,7 @@ class ImageTool extends Component {
           className={`MuiPaper-elevation4 ${classes.slider}`}
         >
           <Slider
-            orientation={width === 'sm' ? 'horizontal' : 'vertical'}
+            orientation={['xs', 'sm'].indexOf(width) >= 0 ? 'horizontal' : 'vertical'}
             min={min}
             max={max}
             value={value}
