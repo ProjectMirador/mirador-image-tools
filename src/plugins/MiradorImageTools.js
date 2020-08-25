@@ -38,7 +38,7 @@ const styles = ({ breakpoints, palette }) => {
       display: 'flex',
       flexDirection: 'row',
       [breakpoints.down('sm')]: {
-        flexDirection: 'column',
+        flexDirection: 'column-reverse',
       },
     },
     container: {
