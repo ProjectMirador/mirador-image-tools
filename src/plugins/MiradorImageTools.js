@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import compose from 'lodash/flowRight';
 import BrightnessIcon from '@material-ui/icons/Brightness5';
 import TonalityIcon from '@material-ui/icons/Tonality';
 import GradientIcon from '@material-ui/icons/Gradient';
@@ -10,6 +11,7 @@ import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import ReplaySharpIcon from '@material-ui/icons/ReplaySharp';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import withStyles from '@material-ui/core/styles/withStyles';
+import withWidth from '@material-ui/core/withWidth';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import ImageTool from './ImageTool';
 import ImageRotation from './ImageRotation';
@@ -38,10 +40,10 @@ const styles = ({ breakpoints, palette }) => {
       display: 'flex',
       flexDirection: 'row',
       [breakpoints.down('sm')]: {
-        flexDirection: 'column-reverse',
+        flexDirection: 'column',
       },
     },
-    container: {
+    borderContainer: {
       border: 0,
       borderRight: border,
       borderImageSlice: 1,
@@ -148,7 +150,7 @@ class MiradorImageTools extends Component {
 
   render() {
     const {
-      classes, enabled, open, viewer, windowId,
+      classes, enabled, open, viewer, windowId, width,
       theme: { palette },
       viewConfig: {
         flip = false,
@@ -164,13 +166,26 @@ class MiradorImageTools extends Component {
 
     const backgroundColor = palette.shades.main;
     const foregroundColor = palette.getContrastText(backgroundColor);
+    const isSmallDisplay = ['xs', 'sm'].indexOf(width) >= 0;
 
+    /** Button for toggling the menu */
+    const toggleButton = (
+      <div className={(isSmallDisplay && open) ? classes.borderContainer : ''}>
+        <MiradorMenuButton
+          aria-label={open ? 'Collapse image tools' : 'Expand image tools'}
+          onClick={this.toggleState}
+        >
+          { open ? <CloseSharpIcon /> : <TuneSharpIcon /> }
+        </MiradorMenuButton>
+      </div>
+    );
     return (
       <div className={`MuiPaper-elevation4 ${classes.root}`}>
+        {isSmallDisplay && toggleButton}
         {open
         && (
         <React.Fragment>
-          <div className={classes.container}>
+          <div className={classes.borderContainer}>
             <ImageRotation
               label="Rotate right"
               onClick={() => this.toggleRotate(90)}
@@ -187,7 +202,7 @@ class MiradorImageTools extends Component {
               flipped={flip}
             />
           </div>
-          <div className={classes.container}>
+          <div className={classes.borderContainer}>
             <ImageTool
               type="brightness"
               label="Brightness"
@@ -245,7 +260,7 @@ class MiradorImageTools extends Component {
               <InvertColorsIcon />
             </ImageTool>
           </div>
-          <div className={classes.container}>
+          <div className={isSmallDisplay ? '' : classes.borderContainer}>
             <MiradorMenuButton
               aria-label="Revert image"
               onClick={this.handleReset}
@@ -255,12 +270,7 @@ class MiradorImageTools extends Component {
           </div>
         </React.Fragment>
         )}
-        <MiradorMenuButton
-          aria-label={open ? 'Collapse image tools' : 'Expand image tools'}
-          onClick={this.toggleState}
-        >
-          { open ? <CloseSharpIcon /> : <TuneSharpIcon /> }
-        </MiradorMenuButton>
+        {!isSmallDisplay && toggleButton}
       </div>
     );
   }
@@ -276,6 +286,7 @@ MiradorImageTools.propTypes = {
   viewer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   viewConfig: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   windowId: PropTypes.string.isRequired,
+  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
 MiradorImageTools.defaultProps = {
@@ -288,4 +299,4 @@ MiradorImageTools.defaultProps = {
 // Export without wrapping HOC for testing.
 export const TestableImageTools = MiradorImageTools;
 
-export default withStyles(styles)(MiradorImageTools);
+export default compose(withStyles(styles), withWidth())(MiradorImageTools);
