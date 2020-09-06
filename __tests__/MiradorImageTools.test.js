@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import MiradorImageTools from '../src/plugins/MiradorImageTools';
+import { TestableImageTools as MiradorImageTools } from '../src/plugins/MiradorImageTools';
 import ImageTool from '../src/plugins/ImageTool';
 import ImageRotation from '../src/plugins/ImageRotation';
 import ImageFlip from '../src/plugins/ImageFlip';
@@ -15,10 +15,12 @@ const mockPalette = {
 function createWrapper(props) {
   return shallow(
     <MiradorImageTools
+      classes={{}}
       viewer={{}}
       updateViewport={() => {}}
       updateWindow={() => {}}
       windowId="x"
+      width="sm"
       theme={mockPalette}
       {...props}
     />,
