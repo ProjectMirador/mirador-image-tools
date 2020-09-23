@@ -19,6 +19,7 @@ export default class ImageRotation extends Component {
 }
 
 ImageRotation.propTypes = {
+  containerId: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   variant: PropTypes.string.isRequired,
 };

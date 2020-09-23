@@ -150,7 +150,7 @@ class MiradorImageTools extends Component {
 
   render() {
     const {
-      classes, enabled, open, viewer, windowId, width,
+      classes, containerId, enabled, open, viewer, windowId, width,
       theme: { palette },
       viewConfig: {
         flip = false,
@@ -173,6 +173,7 @@ class MiradorImageTools extends Component {
       <div className={(isSmallDisplay && open) ? classes.borderContainer : ''}>
         <MiradorMenuButton
           aria-label={open ? 'Collapse image tools' : 'Expand image tools'}
+          containerId={containerId}
           onClick={this.toggleState}
         >
           { open ? <CloseSharpIcon /> : <TuneSharpIcon /> }
@@ -187,11 +188,13 @@ class MiradorImageTools extends Component {
         <React.Fragment>
           <div className={classes.borderContainer}>
             <ImageRotation
+              containerId={containerId}
               label="Rotate right"
               onClick={() => this.toggleRotate(90)}
               variant="right"
             />
             <ImageRotation
+              containerId={containerId}
               label="Rotate left"
               onClick={() => this.toggleRotate(-90)}
               variant="left"
@@ -200,6 +203,7 @@ class MiradorImageTools extends Component {
               label="Flip"
               onClick={this.toggleFlip}
               flipped={flip}
+              containerId={containerId}
             />
           </div>
           <div className={classes.borderContainer}>
@@ -210,6 +214,7 @@ class MiradorImageTools extends Component {
               windowId={windowId}
               value={brightness}
               foregroundColor={foregroundColor}
+              containerId={containerId}
               onChange={this.handleChange('brightness')}
             >
               <BrightnessIcon />
@@ -221,6 +226,7 @@ class MiradorImageTools extends Component {
               windowId={windowId}
               value={contrast}
               foregroundColor={foregroundColor}
+              containerId={containerId}
               onChange={this.handleChange('contrast')}
             >
               <ContrastIcon style={{ transform: 'rotate(180deg)' }} />
@@ -232,6 +238,7 @@ class MiradorImageTools extends Component {
               windowId={windowId}
               value={saturate}
               foregroundColor={foregroundColor}
+              containerId={containerId}
               onChange={this.handleChange('saturate')}
             >
               <GradientIcon />
@@ -244,6 +251,7 @@ class MiradorImageTools extends Component {
               value={grayscale}
               backgroundColor={backgroundColor}
               foregroundColor={foregroundColor}
+              containerId={containerId}
               onChange={this.handleChange('grayscale')}
             >
               <TonalityIcon />
@@ -255,6 +263,7 @@ class MiradorImageTools extends Component {
               windowId={windowId}
               value={invert}
               foregroundColor={foregroundColor}
+              containerId={containerId}
               onChange={this.handleChange('invert')}
             >
               <InvertColorsIcon />
@@ -263,6 +272,7 @@ class MiradorImageTools extends Component {
           <div className={isSmallDisplay ? '' : classes.borderContainer}>
             <MiradorMenuButton
               aria-label="Revert image"
+              containerId={containerId}
               onClick={this.handleReset}
             >
               <ReplaySharpIcon />
@@ -278,6 +288,7 @@ class MiradorImageTools extends Component {
 
 MiradorImageTools.propTypes = {
   classes: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  containerId: PropTypes.string.isRequired,
   enabled: PropTypes.bool,
   open: PropTypes.bool,
   theme: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types

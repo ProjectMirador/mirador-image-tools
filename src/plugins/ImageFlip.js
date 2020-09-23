@@ -24,6 +24,7 @@ export default class ImageFlip extends Component {
 
 ImageFlip.propTypes = {
   backgroundColor: PropTypes.string,
+  containerId: PropTypes.string.isRequired,
   foregroundColor: PropTypes.string,
   flipped: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
