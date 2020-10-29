@@ -160,6 +160,7 @@ class MiradorImageTools extends Component {
         grayscale = 0,
         invert = 0,
       },
+      t,
     } = this.props;
 
     if (!viewer || !enabled) return null;
@@ -172,7 +173,7 @@ class MiradorImageTools extends Component {
     const toggleButton = (
       <div className={(isSmallDisplay && open) ? classes.borderContainer : ''}>
         <MiradorMenuButton
-          aria-label={open ? 'Collapse image tools' : 'Expand image tools'}
+          aria-label={t('collapse', { context: open ? 'open' : 'close' })}
           containerId={containerId}
           onClick={this.toggleState}
         >
@@ -189,18 +190,18 @@ class MiradorImageTools extends Component {
           <div className={classes.borderContainer}>
             <ImageRotation
               containerId={containerId}
-              label="Rotate right"
+              label={t('rotateRight')}
               onClick={() => this.toggleRotate(90)}
               variant="right"
             />
             <ImageRotation
               containerId={containerId}
-              label="Rotate left"
+              label={t('rotateLeft')}
               onClick={() => this.toggleRotate(-90)}
               variant="left"
             />
             <ImageFlip
-              label="Flip"
+              label={t('flip')}
               onClick={this.toggleFlip}
               flipped={flip}
               containerId={containerId}
@@ -209,7 +210,7 @@ class MiradorImageTools extends Component {
           <div className={classes.borderContainer}>
             <ImageTool
               type="brightness"
-              label="Brightness"
+              label={t('brightness')}
               max={200}
               windowId={windowId}
               value={brightness}
@@ -221,7 +222,7 @@ class MiradorImageTools extends Component {
             </ImageTool>
             <ImageTool
               type="contrast"
-              label="Contrast"
+              label={t('contrast')}
               max={200}
               windowId={windowId}
               value={contrast}
@@ -233,7 +234,7 @@ class MiradorImageTools extends Component {
             </ImageTool>
             <ImageTool
               type="saturate"
-              label="Saturation"
+              label={t('saturation')}
               max={200}
               windowId={windowId}
               value={saturate}
@@ -246,7 +247,7 @@ class MiradorImageTools extends Component {
             <ImageTool
               type="grayscale"
               variant="toggle"
-              label="Greyscale"
+              label={t('greyscale')}
               windowId={windowId}
               value={grayscale}
               backgroundColor={backgroundColor}
@@ -259,7 +260,7 @@ class MiradorImageTools extends Component {
             <ImageTool
               type="invert"
               variant="toggle"
-              label="Invert Colors"
+              label={t('invert')}
               windowId={windowId}
               value={invert}
               foregroundColor={foregroundColor}
@@ -271,7 +272,7 @@ class MiradorImageTools extends Component {
           </div>
           <div className={isSmallDisplay ? '' : classes.borderContainer}>
             <MiradorMenuButton
-              aria-label="Revert image"
+              aria-label={t('revert')}
               containerId={containerId}
               onClick={this.handleReset}
             >
@@ -291,6 +292,7 @@ MiradorImageTools.propTypes = {
   containerId: PropTypes.string.isRequired,
   enabled: PropTypes.bool,
   open: PropTypes.bool,
+  t: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   updateViewport: PropTypes.func.isRequired,
   updateWindow: PropTypes.func.isRequired,
