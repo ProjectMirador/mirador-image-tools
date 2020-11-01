@@ -25,6 +25,19 @@ const translations = {
     rotateRight: 'Rotate right',
     saturation: 'Saturation',
   },
+  fr: {
+    brightness: 'Luminosité',
+    collapse_open: 'Fermer les outils de réglages de l\'image',
+    collapse_close: 'Ouvrir les outils de réglages de l\'image',
+    contrast: 'Contraste',
+    flip: 'Miroir',
+    greyscale: 'Niveaux de gris',
+    invert: 'Inverser les couleurs',
+    revert: 'Réinitialiser les réglages',
+    rotateLeft: 'Rotation vers la gauche',
+    rotateRight: 'Rotation vers la droite',
+    saturation: 'Saturation',
+  },
 };
 
 export default translations;
