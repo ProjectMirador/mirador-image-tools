@@ -19,7 +19,6 @@ import ImageFlip from './ImageFlip';
 
 /** Styles for withStyles HOC */
 const styles = ({ breakpoints, palette }) => {
-  console.log(palette);
   const backgroundColor = palette.shades.main;
   const foregroundColor = palette.getContrastText(backgroundColor);
   const border = `1px solid ${fade(foregroundColor, 0.2)}`;
