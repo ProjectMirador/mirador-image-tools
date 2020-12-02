@@ -38,6 +38,19 @@ const translations = {
     rotateRight: 'Rotation vers la droite',
     saturation: 'Saturation',
   },
+  sr: {
+    brightness: 'Осветљење',
+    collapse_open: 'Затворите алат',
+    collapse_close: 'Отворите алат',
+    contrast: 'Контраст',
+    flip: 'Окрени',
+    greyscale: 'Црнобело',
+    invert: 'Инверзија боја',
+    revert: 'Поништи подешавања',
+    rotateLeft: 'Ротирај лево',
+    rotateRight: 'Ротирај десно',
+    saturation: 'Сатурација',
+  },
 };
 
 export default translations;
