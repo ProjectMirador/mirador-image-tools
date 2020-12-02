@@ -19,11 +19,13 @@ const translations = {
     contrast: 'Contrast',
     flip: 'Flip',
     greyscale: 'Greyscale',
+    hideImageTools: 'Hide image tools',
     invert: 'Invert colors',
     revert: 'Revert image',
     rotateLeft: 'Rotate left',
     rotateRight: 'Rotate right',
     saturation: 'Saturation',
+    showImageTools: 'Show image tools',
   },
   fr: {
     brightness: 'Luminosité',
