@@ -79,6 +79,26 @@ class MiradorImageTools extends Component {
     if (viewer && viewConfig !== prevProps.viewConfig) this.applyFilters();
   }
 
+  handleChange(param) {
+    const { updateViewport, windowId } = this.props;
+    return (value) => updateViewport(windowId, { [param]: value });
+  }
+
+  handleReset() {
+    const { updateViewport, windowId } = this.props;
+    const viewConfig = {
+      rotation: 0,
+      flip: false,
+      brightness: 100,
+      contrast: 100,
+      saturate: 100,
+      grayscale: 0,
+      invert: 0,
+    };
+
+    updateViewport(windowId, viewConfig);
+  }
+
   applyFilters() {
     const {
       viewConfig: {
@@ -125,26 +145,6 @@ class MiradorImageTools extends Component {
     const { updateViewport, viewConfig: { flip = false }, windowId } = this.props;
 
     updateViewport(windowId, { flip: !flip });
-  }
-
-  handleChange(param) {
-    const { updateViewport, windowId } = this.props;
-    return (value) => updateViewport(windowId, { [param]: value });
-  }
-
-  handleReset() {
-    const { updateViewport, windowId } = this.props;
-    const viewConfig = {
-      rotation: 0,
-      flip: false,
-      brightness: 100,
-      contrast: 100,
-      saturate: 100,
-      grayscale: 0,
-      invert: 0,
-    };
-
-    updateViewport(windowId, viewConfig);
   }
 
   render() {

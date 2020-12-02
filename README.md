@@ -1,6 +1,6 @@
 # mirador-image-tools
 
-[![Build Status](https://travis-ci.com/ProjectMirador/mirador-image-tools.svg?branch=master)](https://travis-ci.com/ProjectMirador/mirador-image-tools)
+![Node.js CI](https://github.com/ProjectMirador/mirador-image-tools/workflows/Node.js%20CI/badge.svg)
 [![npm version](https://badge.fury.io/js/mirador-image-tools.svg)](https://badge.fury.io/js/mirador-image-tools)
 
 
