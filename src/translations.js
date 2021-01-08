@@ -45,11 +45,13 @@ const translations = {
     contrast: 'Контраст',
     flip: 'Окрени',
     greyscale: 'Црнобело',
+    hideImageTools: 'Сакријте алат',
     invert: 'Инверзија боја',
     revert: 'Поништи подешавања',
     rotateLeft: 'Ротирај лево',
     rotateRight: 'Ротирај десно',
     saturation: 'Сатурација',
+    showImageTools: 'Прикажите алат',
   },
 };
 
