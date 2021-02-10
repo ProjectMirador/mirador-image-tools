@@ -6,7 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import TuneSharpIcon from '@material-ui/icons/TuneSharp';
 
 const MiradorImageToolsMenuItem = ({
-  enabled, handleClose, updateWindow, windowId,
+  enabled, handleClose, t, updateWindow, windowId,
 }) => {
   const handleClickOpen = () => {
     handleClose();
@@ -19,7 +19,7 @@ const MiradorImageToolsMenuItem = ({
         <TuneSharpIcon />
       </ListItemIcon>
       <ListItemText primaryTypographyProps={{ variant: 'body1' }}>
-        { enabled ? 'Hide image tools' : 'Show image tools' }
+        { enabled ? t('hide') : t('show') }
       </ListItemText>
     </MenuItem>
   );
