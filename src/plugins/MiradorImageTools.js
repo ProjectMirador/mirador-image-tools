@@ -173,7 +173,7 @@ class MiradorImageTools extends Component {
       <div className={(isSmallDisplay && open) ? classes.borderContainer : ''}>
         <MiradorMenuButton
           aria-expanded={open}
-          aria-haspopup={true}
+          aria-haspopup
           aria-label={t('collapse', { context: open ? 'open' : 'close' })}
           containerId={containerId}
           onClick={this.toggleState}
