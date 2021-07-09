@@ -57,7 +57,7 @@ const translations = {
     rotateLeft: '左回転',
     rotateRight: '右回転',
     saturation: '彩度',
-    show: '画像ツールを表示'
+    show: '画像ツールを表示',
   },
   sr: {
     brightness: 'Осветљење',
