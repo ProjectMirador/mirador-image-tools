@@ -44,6 +44,21 @@ const translations = {
     saturation: 'Saturation',
     show: 'Afficher les outils d\'image',
   },
+  ja: {
+    brightness: '明るさ',
+    collapse_open: '画像ツールを開く',
+    collapse_close: '画像ツールを畳む',
+    contrast: 'コントラスト',
+    flip: 'フリップ',
+    greyscale: 'グレースケール',
+    hide: '画像ツールを隠す',
+    invert: '色を反転',
+    revert: '画像を反転',
+    rotateLeft: '左回転',
+    rotateRight: '右回転',
+    saturation: '彩度',
+    show: '画像ツールを表示'
+  },
   sr: {
     brightness: 'Осветљење',
     collapse_open: 'Затворите алат',
