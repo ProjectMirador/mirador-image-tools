@@ -43,7 +43,7 @@ const translations = {
     rotateRight: 'Ruota a destra',
     saturation: 'Saturazione',
     show: 'Mostra gli strumenti dell\'immagine',
-  },  
+  },
   fr: {
     brightness: 'Luminosité',
     collapse_open: 'Fermer les outils d\'image',
