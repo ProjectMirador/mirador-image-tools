@@ -4,7 +4,7 @@ import MiradorImageTools from './plugins/MiradorImageTools';
 import MiradorImageToolsMenuItem from './plugins/MiradorImageToolsMenuItem';
 import translations from './translations';
 
-export default [
+export const miradorImageToolsPlugin = [
   {
     target: 'OpenSeadragonViewer',
     mapDispatchToProps: {

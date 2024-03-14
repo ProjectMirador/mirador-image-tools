@@ -159,7 +159,6 @@ class MiradorImageTools extends Component {
   render() {
     const {
       classes, containerId, enabled, open, viewer, windowId, width,
-      theme: { palette },
       viewConfig: {
         flip = false,
         brightness = 100,
@@ -173,13 +172,13 @@ class MiradorImageTools extends Component {
 
     if (!viewer || !enabled) return null;
 
-    const backgroundColor = palette.shades.main;
-    const foregroundColor = palette.getContrastText(backgroundColor);
+    const backgroundColor = 'red';
+    const foregroundColor = 'white';
     const isSmallDisplay = ['xs', 'sm'].indexOf(width) >= 0;
 
     /** Button for toggling the menu */
     const toggleButton = (
-      <Root className={(isSmallDisplay && open) ? classes.borderContainer : ''}>
+      <Root>
         <MiradorMenuButton
           aria-expanded={open}
           aria-haspopup
@@ -192,12 +191,12 @@ class MiradorImageTools extends Component {
       </Root>
     );
     return (
-      <div className={`MuiPaper-elevation4 ${classes.root}`}>
+      <div className={`MuiPaper-elevation4`}>
         {isSmallDisplay && toggleButton}
         {open
         && (
         <React.Fragment>
-          <div className={classes.borderContainer}>
+          <div>
             <ImageRotation
               containerId={containerId}
               label={t('rotateRight')}
@@ -217,7 +216,7 @@ class MiradorImageTools extends Component {
               containerId={containerId}
             />
           </div>
-          <div className={classes.borderContainer}>
+          <div>
             <ImageTool
               type="brightness"
               label={t('brightness')}
@@ -280,7 +279,7 @@ class MiradorImageTools extends Component {
               <InvertColorsIcon />
             </ImageTool>
           </div>
-          <div className={isSmallDisplay ? '' : classes.borderContainer}>
+          <div>
             <MiradorMenuButton
               aria-label={t('revert')}
               containerId={containerId}

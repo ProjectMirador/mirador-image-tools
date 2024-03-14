@@ -23,6 +23,7 @@ module.exports = {
       babel: {
         exclude: []
       }
-    }
+    },
+    config: (config) => { console.log(config); config }
   },
 };
