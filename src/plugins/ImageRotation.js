@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
-import RotateRightIcon from '@material-ui/icons/RotateRight';
-import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import RotateRightIcon from '@mui/icons-material/RotateRight';
+import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 
 export default class ImageRotation extends Component {
   render() {

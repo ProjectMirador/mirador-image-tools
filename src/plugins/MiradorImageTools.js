@@ -1,36 +1,43 @@
 import React, { Component } from 'react';
+import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import compose from 'lodash/flowRight';
-import BrightnessIcon from '@material-ui/icons/Brightness5';
-import TonalityIcon from '@material-ui/icons/Tonality';
-import GradientIcon from '@material-ui/icons/Gradient';
-import ContrastIcon from '@material-ui/icons/ExposureSharp';
-import InvertColorsIcon from '@material-ui/icons/InvertColors';
-import TuneSharpIcon from '@material-ui/icons/TuneSharp';
-import CloseSharpIcon from '@material-ui/icons/CloseSharp';
-import ReplaySharpIcon from '@material-ui/icons/ReplaySharp';
-import { fade } from '@material-ui/core/styles/colorManipulator';
-import withStyles from '@material-ui/core/styles/withStyles';
-import withWidth from '@material-ui/core/withWidth';
+import BrightnessIcon from '@mui/icons-material/Brightness5';
+import TonalityIcon from '@mui/icons-material/Tonality';
+import GradientIcon from '@mui/icons-material/Gradient';
+import ContrastIcon from '@mui/icons-material/ExposureSharp';
+import InvertColorsIcon from '@mui/icons-material/InvertColors';
+import TuneSharpIcon from '@mui/icons-material/TuneSharp';
+import CloseSharpIcon from '@mui/icons-material/CloseSharp';
+import ReplaySharpIcon from '@mui/icons-material/ReplaySharp';
+import { alpha } from '@mui/material/styles';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import ImageTool from './ImageTool';
 import ImageRotation from './ImageRotation';
 import ImageFlip from './ImageFlip';
 
-/** Styles for withStyles HOC */
-const styles = ({ breakpoints, palette }) => {
+const PREFIX = 'TestableImageTools';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  borderContainer: `${PREFIX}-borderContainer`
+};
+
+const Root = styled('div')(({
+  theme: { breakpoints, palette }
+}) => {
   const backgroundColor = palette.shades.main;
   const foregroundColor = palette.getContrastText(backgroundColor);
-  const border = `1px solid ${fade(foregroundColor, 0.2)}`;
+  const border = `1px solid ${alpha(foregroundColor, 0.2)}`;
   const borderImageRight = 'linear-gradient('
     + 'to bottom, '
-    + `${fade(foregroundColor, 0)} 20%, `
-    + `${fade(foregroundColor, 0.2)} 20% 80%, `
-    + `${fade(foregroundColor, 0)} 80% )`;
+    + `${alpha(foregroundColor, 0)} 20%, `
+    + `${alpha(foregroundColor, 0.2)} 20% 80%, `
+    + `${alpha(foregroundColor, 0)} 80% )`;
   const borderImageBottom = borderImageRight.replace('to bottom', 'to right');
   return {
-    root: {
-      backgroundColor: fade(backgroundColor, 0.8),
+    [`& .${classes.root}`]: {
+      backgroundColor: alpha(backgroundColor, 0.8),
       borderRadius: 25,
       position: 'absolute',
       top: 8,
@@ -42,7 +49,7 @@ const styles = ({ breakpoints, palette }) => {
         flexDirection: 'column',
       },
     },
-    borderContainer: {
+    [`& .${classes.borderContainer}`]: {
       border: 0,
       borderRight: border,
       borderImageSlice: 1,
@@ -57,7 +64,10 @@ const styles = ({ breakpoints, palette }) => {
       },
     },
   };
-};
+});
+
+// FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
+const withWidth = () => (WrappedComponent) => (props) => <WrappedComponent {...props} width="xs" />;
 
 class MiradorImageTools extends Component {
   constructor(props) {
@@ -170,7 +180,7 @@ class MiradorImageTools extends Component {
 
     /** Button for toggling the menu */
     const toggleButton = (
-      <div className={(isSmallDisplay && open) ? classes.borderContainer : ''}>
+      <Root className={(isSmallDisplay && open) ? classes.borderContainer : ''}>
         <MiradorMenuButton
           aria-expanded={open}
           aria-haspopup
@@ -180,7 +190,7 @@ class MiradorImageTools extends Component {
         >
           { open ? <CloseSharpIcon /> : <TuneSharpIcon /> }
         </MiradorMenuButton>
-      </div>
+      </Root>
     );
     return (
       <div className={`MuiPaper-elevation4 ${classes.root}`}>
@@ -313,4 +323,4 @@ MiradorImageTools.defaultProps = {
 // Export without wrapping HOC for testing.
 export const TestableImageTools = MiradorImageTools;
 
-export default compose(withStyles(styles), withWidth())(MiradorImageTools);
+export default compose( withWidth())(MiradorImageTools);

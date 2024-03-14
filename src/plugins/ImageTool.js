@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
+import { styled } from '@mui/material/styles';
 import compose from 'lodash/flowRight';
 import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
-import Slider from '@material-ui/core/Slider';
-import withStyles from '@material-ui/core/styles/withStyles';
-import withWidth from '@material-ui/core/withWidth';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import Slider from '@mui/material/Slider';
+import { alpha } from '@mui/material/styles';
+const PREFIX = 'ImageTool';
 
-/** Styles for withStyles HOC */
-const styles = ({ palette, breakpoints }) => ({
-  slider: {
-    backgroundColor: fade(palette.shades.main, 0.8),
+const classes = {
+  slider: `${PREFIX}-slider`
+};
+
+const Root = styled('div')(({
+  theme: { palette, breakpoints }
+}) => ({
+  [`& .${classes.slider}`]: {
+    backgroundColor: alpha(palette.shades.main, 0.8),
     borderRadius: 25,
     top: 48,
     marginTop: 2,
@@ -28,8 +33,11 @@ const styles = ({ palette, breakpoints }) => ({
       marginBottom: 2,
       padding: [[4, 2, 4, 2]],
     },
-  },
-});
+  }
+}));
+
+// FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
+const withWidth = () => (WrappedComponent) => (props) => <WrappedComponent {...props} width="xs" />;
 
 class ImageTool extends Component {
   constructor(props) {
@@ -72,11 +80,11 @@ class ImageTool extends Component {
 
     let bubbleBg;
     if (open || toggled) {
-      bubbleBg = fade(foregroundColor, open ? 0.1 : 0.25);
+      bubbleBg = alpha(foregroundColor, open ? 0.1 : 0.25);
     }
 
     return (
-      <div style={{ display: 'inline-block' }}>
+      <Root style={{ display: 'inline-block' }}>
         <MiradorMenuButton
           id={`${id}-label`}
           aria-label={label}
@@ -104,7 +112,7 @@ class ImageTool extends Component {
           />
         </div>
         )}
-      </div>
+      </Root>
     );
   }
 }
@@ -135,4 +143,4 @@ ImageTool.defaultProps = {
   variant: 'slider',
 };
 
-export default compose(withStyles(styles), withWidth())(ImageTool);
+export default compose( withWidth())(ImageTool);

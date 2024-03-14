@@ -20,7 +20,11 @@
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@emotion/cache": "^11.11.0",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6"
+  },
   "peerDependencies": {
     "mirador": "^4.0.0-alpha.1",
     "react": "18.x",
