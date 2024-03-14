@@ -1,9 +1,6 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from './test-utils';
 import { TestableImageTools as MiradorImageTools } from '../src/plugins/MiradorImageTools';
-import ImageTool from '../src/plugins/ImageTool';
-import ImageRotation from '../src/plugins/ImageRotation';
-import ImageFlip from '../src/plugins/ImageFlip';
 
 const mockPalette = {
   palette: {
@@ -22,24 +19,31 @@ function createWrapper(props) {
       windowId="x"
       width="sm"
       theme={mockPalette}
-      t={() => {}}
+      t={(k) => k}
       {...props}
     />,
   );
 }
 
 describe('MiradorImageTools', () => {
-  let wrapper;
-  it('renders ImageTools', () => {
-    wrapper = createWrapper();
-    expect(wrapper.find(ImageTool).length).toBe(5);
+  it('renders buttons', async () => {
+    createWrapper();
+
+    expect(screen.getByRole('button', { name: 'brightness' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'contrast' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'saturation' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'greyscale' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'invert' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'revert' })).toBeInTheDocument();
   });
   it('renders ImageRotation', () => {
-    wrapper = createWrapper();
-    expect(wrapper.find(ImageRotation).length).toBe(2);
+    createWrapper();
+
+    expect(screen.getByRole('button', { name: 'rotateLeft' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'rotateRight' })).toBeInTheDocument();
   });
   it('renders ImageFlip', () => {
-    wrapper = createWrapper();
-    expect(wrapper.find(ImageFlip).length).toBe(1);
+    createWrapper();
+    expect(screen.getByRole('button', { name: 'flip' })).toBeInTheDocument();
   });
 });
