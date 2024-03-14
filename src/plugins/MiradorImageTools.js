@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { styled } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import compose from 'lodash/flowRight';
 import BrightnessIcon from '@mui/icons-material/Brightness5';
@@ -10,7 +10,6 @@ import InvertColorsIcon from '@mui/icons-material/InvertColors';
 import TuneSharpIcon from '@mui/icons-material/TuneSharp';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import ReplaySharpIcon from '@mui/icons-material/ReplaySharp';
-import { alpha } from '@mui/material/styles';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import ImageTool from './ImageTool';
 import ImageRotation from './ImageRotation';
@@ -18,13 +17,13 @@ import ImageFlip from './ImageFlip';
 
 const PREFIX = 'TestableImageTools';
 
-const classes = {
+const styledClasses = {
   root: `${PREFIX}-root`,
-  borderContainer: `${PREFIX}-borderContainer`
+  borderContainer: `${PREFIX}-borderContainer`,
 };
 
 const Root = styled('div')(({
-  theme: { breakpoints, palette }
+  theme: { breakpoints, palette },
 }) => {
   const backgroundColor = palette.shades.main;
   const foregroundColor = palette.getContrastText(backgroundColor);
@@ -36,7 +35,7 @@ const Root = styled('div')(({
     + `${alpha(foregroundColor, 0)} 80% )`;
   const borderImageBottom = borderImageRight.replace('to bottom', 'to right');
   return {
-    [`& .${classes.root}`]: {
+    [`& .${styledClasses.root}`]: {
       backgroundColor: alpha(backgroundColor, 0.8),
       borderRadius: 25,
       position: 'absolute',
@@ -49,7 +48,7 @@ const Root = styled('div')(({
         flexDirection: 'column',
       },
     },
-    [`& .${classes.borderContainer}`]: {
+    [`& .${styledClasses.borderContainer}`]: {
       border: 0,
       borderRight: border,
       borderImageSlice: 1,
@@ -323,4 +322,4 @@ MiradorImageTools.defaultProps = {
 // Export without wrapping HOC for testing.
 export const TestableImageTools = MiradorImageTools;
 
-export default compose( withWidth())(MiradorImageTools);
+export default compose(withWidth())(MiradorImageTools);

@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import { styled } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 import compose from 'lodash/flowRight';
 import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import Slider from '@mui/material/Slider';
-import { alpha } from '@mui/material/styles';
+
 const PREFIX = 'ImageTool';
 
-const classes = {
-  slider: `${PREFIX}-slider`
+const styledClasses = {
+  slider: `${PREFIX}-slider`,
 };
 
 const Root = styled('div')(({
-  theme: { palette, breakpoints }
+  theme: { palette, breakpoints },
 }) => ({
-  [`& .${classes.slider}`]: {
+  [`& .${styledClasses.slider}`]: {
     backgroundColor: alpha(palette.shades.main, 0.8),
     borderRadius: 25,
     top: 48,
@@ -33,7 +33,7 @@ const Root = styled('div')(({
       marginBottom: 2,
       padding: [[4, 2, 4, 2]],
     },
-  }
+  },
 }));
 
 // FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
@@ -143,4 +143,4 @@ ImageTool.defaultProps = {
   variant: 'slider',
 };
 
-export default compose( withWidth())(ImageTool);
+export default compose(withWidth())(ImageTool);
