@@ -7,11 +7,15 @@ module.exports = {
 
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
-  setupFiles: [
+  setupFilesAfterEnv: [
     '<rootDir>/setupJest.js',
   ],
   // Ignore Mirador code from jest transforms
   transformIgnorePatterns: [
     '<rootDir>/node_modules/(?!mirador)',
+  ],
+  testEnvironment: "jsdom",
+  testPathIgnorePatterns: [
+    "<rootDir>/__tests__/test-utils.js",
   ],
 };
