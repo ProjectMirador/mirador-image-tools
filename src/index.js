@@ -1,4 +1,3 @@
-import withTheme from '@mui/styles/withTheme';
 import * as actions from 'mirador/dist/es/src/state/actions';
 import { getWindowConfig, getViewer, getContainerId } from 'mirador/dist/es/src/state/selectors';
 import MiradorImageTools from './plugins/MiradorImageTools';
@@ -19,7 +18,7 @@ export const miradorImageToolsPlugin = [
       viewConfig: getViewer(state, { windowId }) || {},
     }),
     mode: 'add',
-    component: withTheme(MiradorImageTools),
+    component: MiradorImageTools,
     config: {
       translations,
     },

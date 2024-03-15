@@ -22,16 +22,16 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "@emotion/babel-plugin": "^11.11.0",
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6"
   },
   "peerDependencies": {
+    "@mui/material": "^5.x",
     "mirador": "^4.0.0-alpha.1",
     "react": "18.x",
-    "react-dom": "18.x",
-    "@mui/material": "^5.x",
-    "@mui/styles": "^5.x"
+    "react-dom": "18.x"
   },
   "devDependencies": {
     "@babel/core": "^7.17.7",
@@ -44,7 +44,6 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@mui/material": "^5.13.5",
-    "@mui/styles": "^5.13.5",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
     "@testing-library/dom": "^9.2.0",
     "@testing-library/jest-dom": "^6.1.5",

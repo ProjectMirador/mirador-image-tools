@@ -11,7 +11,6 @@ import TuneSharpIcon from '@mui/icons-material/TuneSharp';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import ReplaySharpIcon from '@mui/icons-material/ReplaySharp';
 import { styled, alpha } from '@mui/material/styles';
-import withStyles from '@mui/styles/withStyles';
 import MiradorMenuButton from 'mirador/dist/es/src/containers/MiradorMenuButton';
 import ImageTool from './ImageTool';
 import ImageRotation from './ImageRotation';
@@ -21,8 +20,19 @@ const SizeContainer = styled('div')(() => ({
   position: 'static !important',
 }));
 
+const ToggleContainer = styled('div')(() => ({
+  border: 0,
+  borderImageSlice: 1,
+}));
+
+const ToolContainer = styled('div')(() => ({
+  display: 'flex',
+  border: 0,
+  borderImageSlice: 1,
+}));
+
 /** Styles for withStyles HOC */
-const styles = ({ breakpoints, palette }) => {
+const Root = styled('div')(({ small, theme: { palette } }) => {
   const backgroundColor = palette.shades.main;
   const foregroundColor = palette.getContrastText(backgroundColor);
   const border = `1px solid ${alpha(foregroundColor, 0.2)}`;
@@ -33,35 +43,36 @@ const styles = ({ breakpoints, palette }) => {
     + `${alpha(foregroundColor, 0)} 80% )`;
   const borderImageBottom = borderImageRight.replace('to bottom', 'to right');
   return {
-    root: {
-      backgroundColor: alpha(backgroundColor, 0.8),
-      borderRadius: 25,
-      position: 'absolute',
-      top: 8,
-      right: 8,
-      zIndex: 999,
-      display: 'flex',
-      flexDirection: 'row',
-      [breakpoints.down('sm')]: {
-        flexDirection: 'column',
-      },
+    backgroundColor: alpha(backgroundColor, 0.8),
+    borderRadius: 25,
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    zIndex: 999,
+    display: 'flex',
+    flexDirection: 'row',
+    ...(small && { flexDirection: 'column' }),
+    [ToggleContainer]: {
+      ...(small && {
+        borderBottom: border,
+        borderImageSource: borderImageBottom,
+        display: 'flex',
+      }),
     },
-    borderContainer: {
-      border: 0,
-      borderRight: border,
-      borderImageSlice: 1,
-      borderImageSource: borderImageRight,
-      display: 'flex',
-      flexDirection: 'row',
-      [breakpoints.down('sm')]: {
+    [ToolContainer]: {
+      ...(!small && {
+        borderRight: border,
+        borderImageSource: borderImageRight,
+        flexDirection: 'row',
+      }),
+      ...(small && {
         flexDirection: 'column',
         borderBottom: border,
-        borderRight: 'none',
         borderImageSource: borderImageBottom,
-      },
+      }),
     },
   };
-};
+});
 
 class MiradorImageTools extends Component {
   constructor(props) {
@@ -153,8 +164,7 @@ class MiradorImageTools extends Component {
 
   render() {
     const {
-      classes, enabled, open, viewer, windowId,
-      theme: { palette },
+      enabled, open, viewer, windowId,
       viewConfig: {
         flip = false,
         brightness = 100,
@@ -168,13 +178,11 @@ class MiradorImageTools extends Component {
 
     if (!viewer || !enabled) return null;
 
-    const backgroundColor = palette.shades.main;
-    const foregroundColor = palette.getContrastText(backgroundColor);
     const isSmallDisplay = width && (width < 480);
 
     /** Button for toggling the menu */
     const toggleButton = (
-      <div className={(isSmallDisplay && open) ? classes.borderContainer : ''}>
+      <ToggleContainer>
         <MiradorMenuButton
           aria-expanded={open}
           aria-haspopup
@@ -183,16 +191,16 @@ class MiradorImageTools extends Component {
         >
           { open ? <CloseSharpIcon /> : <TuneSharpIcon /> }
         </MiradorMenuButton>
-      </div>
+      </ToggleContainer>
     );
     return (
       <SizeContainer>
-        <div className={`MuiPaper-elevation4 ${classes.root}`}>
+        <Root className="MuiPaper-elevation4" small={isSmallDisplay}>
           {isSmallDisplay && toggleButton}
           {open
           && (
           <React.Fragment>
-            <div className={classes.borderContainer}>
+            <ToolContainer>
               <ImageRotation
                 label={t('rotateRight')}
                 onClick={() => this.toggleRotate(90)}
@@ -208,15 +216,14 @@ class MiradorImageTools extends Component {
                 onClick={this.toggleFlip}
                 flipped={flip}
               />
-            </div>
-            <div className={classes.borderContainer}>
+            </ToolContainer>
+            <ToolContainer>
               <ImageTool
                 type="brightness"
                 label={t('brightness')}
                 max={200}
                 windowId={windowId}
                 value={brightness}
-                foregroundColor={foregroundColor}
                 onChange={this.handleChange('brightness')}
                 small={isSmallDisplay}
               >
@@ -228,7 +235,6 @@ class MiradorImageTools extends Component {
                 max={200}
                 windowId={windowId}
                 value={contrast}
-                foregroundColor={foregroundColor}
                 onChange={this.handleChange('contrast')}
                 small={isSmallDisplay}
               >
@@ -240,7 +246,6 @@ class MiradorImageTools extends Component {
                 max={200}
                 windowId={windowId}
                 value={saturate}
-                foregroundColor={foregroundColor}
                 onChange={this.handleChange('saturate')}
                 small={isSmallDisplay}
               >
@@ -252,8 +257,6 @@ class MiradorImageTools extends Component {
                 label={t('greyscale')}
                 windowId={windowId}
                 value={grayscale}
-                backgroundColor={backgroundColor}
-                foregroundColor={foregroundColor}
                 onChange={this.handleChange('grayscale')}
                 small={isSmallDisplay}
               >
@@ -265,37 +268,34 @@ class MiradorImageTools extends Component {
                 label={t('invert')}
                 windowId={windowId}
                 value={invert}
-                foregroundColor={foregroundColor}
                 onChange={this.handleChange('invert')}
                 small={isSmallDisplay}
               >
                 <InvertColorsIcon />
               </ImageTool>
-            </div>
-            <div className={isSmallDisplay ? '' : classes.borderContainer}>
+            </ToolContainer>
+            <ToolContainer>
               <MiradorMenuButton
                 aria-label={t('revert')}
                 onClick={this.handleReset}
               >
                 <ReplaySharpIcon />
               </MiradorMenuButton>
-            </div>
+            </ToolContainer>
           </React.Fragment>
           )}
           {!isSmallDisplay && toggleButton}
-        </div>
+        </Root>
       </SizeContainer>
     );
   }
 }
 
 MiradorImageTools.propTypes = {
-  classes: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   enabled: PropTypes.bool,
   open: PropTypes.bool,
   size: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   t: PropTypes.func.isRequired,
-  theme: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   updateViewport: PropTypes.func.isRequired,
   updateWindow: PropTypes.func.isRequired,
   viewer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
@@ -314,4 +314,4 @@ MiradorImageTools.defaultProps = {
 // Export without wrapping HOC for testing.
 export const TestableImageTools = MiradorImageTools;
 
-export default compose(withStyles(styles), withSize())(MiradorImageTools);
+export default compose(withSize())(MiradorImageTools);

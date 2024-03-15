@@ -1,35 +1,41 @@
 import React, { Component } from 'react';
-import compose from 'lodash/flowRight';
 import PropTypes from 'prop-types';
 import MiradorMenuButton from 'mirador/dist/es/src/containers/MiradorMenuButton';
 import Slider from '@mui/material/Slider';
-import { alpha } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 
-import withStyles from '@mui/styles/withStyles';
+const SliderContainer = styled('div')(({ small, theme: { palette } }) => ({
+  backgroundColor: alpha(palette.shades.main, 0.8),
+  borderRadius: 25,
+  top: 48,
+  marginTop: 2,
+  position: 'absolute',
+  height: 150,
+  zIndex: 100,
+  marginLeft: 2,
+  padding: [[2, 7, 2, 7]],
+  ...(small && {
+    top: 'auto',
+    right: 48,
+    width: 150,
+    height: 'auto',
+    marginTop: -46,
+    marginBottom: 2,
+    padding: [[4, 2, 4, 2]],
+  }),
+}));
 
-/** Styles for withStyles HOC */
-const styles = ({ palette, breakpoints }) => ({
-  slider: {
-    backgroundColor: alpha(palette.shades.main, 0.8),
-    borderRadius: 25,
-    top: 48,
-    marginTop: 2,
-    position: 'absolute',
-    height: 150,
-    zIndex: 100,
-    marginLeft: 2,
-    padding: [[2, 7, 2, 7]],
-    [breakpoints.down('sm')]: {
-      top: 'auto',
-      right: 48,
-      width: 150,
-      height: 'auto',
-      marginTop: -46,
-      marginBottom: 2,
-      padding: [[4, 2, 4, 2]],
-    },
-  },
-});
+const ImageToolToggleButton = styled(MiradorMenuButton)(({
+  theme: { palette },
+  ownerState: { open, toggled },
+}) => ({
+  ...(toggled && {
+    backgroundColor: `${alpha(palette.getContrastText(palette.shades.main), 0.25)} !important`,
+  }),
+  ...(open && {
+    backgroundColor: `${alpha(palette.getContrastText(palette.shades.main), 0.1)} !important`,
+  }),
+}));
 
 class ImageTool extends Component {
   constructor(props) {
@@ -61,8 +67,7 @@ class ImageTool extends Component {
 
   render() {
     const {
-      children, label, max, min, value, type, variant, windowId,
-      foregroundColor, classes, small,
+      children, label, max, min, value, type, variant, windowId, small,
     } = this.props;
     const { open } = this.state;
 
@@ -70,29 +75,25 @@ class ImageTool extends Component {
 
     const id = `${windowId}-${type}`;
 
-    let bubbleBg;
-    if (open || toggled) {
-      bubbleBg = alpha(foregroundColor, open ? 0.1 : 0.25);
-    }
-
     return (
       <div style={{ display: 'inline-block' }}>
-        <MiradorMenuButton
+        <ImageToolToggleButton
           id={`${id}-label`}
           aria-label={label}
           onClick={this.handleClick}
           aria-expanded={open}
           aria-controls={id}
-          style={{ backgroundColor: bubbleBg }}
+          ownerState={{ toggled, open }}
         >
           {children}
-        </MiradorMenuButton>
+        </ImageToolToggleButton>
 
         {open && (
-        <div
+        <SliderContainer
           id={id}
           aria-labelledby={`${id}-label`}
-          className={`MuiPaper-elevation4 ${classes.slider}`}
+          className="MuiPaper-elevation4"
+          small={small}
         >
           <Slider
             orientation={small ? 'horizontal' : 'vertical'}
@@ -101,7 +102,7 @@ class ImageTool extends Component {
             value={value}
             onChange={this.handleChange}
           />
-        </div>
+        </SliderContainer>
         )}
       </div>
     );
@@ -110,9 +111,6 @@ class ImageTool extends Component {
 
 ImageTool.propTypes = {
   children: PropTypes.node.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  classes: PropTypes.object.isRequired,
-  foregroundColor: PropTypes.string,
   label: PropTypes.string.isRequired,
   min: PropTypes.number,
   max: PropTypes.number,
@@ -126,7 +124,6 @@ ImageTool.propTypes = {
 };
 
 ImageTool.defaultProps = {
-  foregroundColor: 'rgb(0, 0, 0)',
   min: 0,
   max: 100,
   open: false,
@@ -134,4 +131,4 @@ ImageTool.defaultProps = {
   variant: 'slider',
 };
 
-export default compose(withStyles(styles))(ImageTool);
+export default ImageTool;
