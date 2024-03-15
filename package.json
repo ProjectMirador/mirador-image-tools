@@ -11,11 +11,14 @@
     "umd"
   ],
   "scripts": {
-    "build": "NODE_ENV=production webpack --mode=production",
+    "build": "npm run build:umd",
     "build:demo": "NODE_ENV=development webpack --mode=development",
+    "build:umd": "NODE_ENV=production webpack --mode=production",
+    "build:es": "mkdir -p es && cp -r src/* es && NODE_ENV=production MODULE_FORMAT=es npx babel es -d es",
+    "build:cjs": "mkdir -p lib && cp -r src/* lib && NODE_ENV=production MODULE_FORMAT=cjs npx babel lib -d lib",
     "clean": "rm -rf ./umd && rm -rf ./es && rm -rf ./lib && rm -rf ./demo/dist",
     "lint": "eslint ./src ./__tests__",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "npm run clean && npm run build:es && npm run build:cjs && npm run build",
     "start": "NODE_ENV=development webpack serve --open",
     "test": "npm run lint && jest",
     "test:coverage": "jest --coverage",
@@ -34,6 +37,7 @@
     "react-dom": "18.x"
   },
   "devDependencies": {
+    "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.7",
     "@babel/eslint-parser": "^7.5.4",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
