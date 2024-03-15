@@ -1,6 +1,6 @@
 {
   "name": "mirador-image-tools",
-  "version": "0.11.0",
+  "version": "1.0.0-alpha.1",
   "description": "mirador-image-tools React component",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -21,11 +21,17 @@
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@emotion/cache": "^11.11.0",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6"
+  },
   "peerDependencies": {
-    "mirador": "^3.0.0-rc.4",
-    "react": "16.x",
-    "react-dom": "16.x"
+    "mirador": "^4.0.0-alpha.1",
+    "react": "18.x",
+    "react-dom": "18.x",
+    "@mui/material": "^5.x",
+    "@mui/styles": "^5.x"
   },
   "devDependencies": {
     "@babel/core": "^7.17.7",
@@ -37,6 +43,8 @@
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
+    "@mui/material": "^5.13.5",
+    "@mui/styles": "^5.13.5",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
     "@testing-library/dom": "^9.2.0",
     "@testing-library/jest-dom": "^6.1.5",
@@ -56,10 +64,13 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "html-loader": "^5.0.0",
     "html-webpack-plugin": "^5.6.0",
-    "jest": "^24.9.0",
-    "mirador": "^3.0.0-rc.4",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "jest": "^29.3.1",
+    "jest-environment-jsdom": "^29.4.3",
+    "jest-puppeteer": "^9.0.2",
+    "mirador": "^4.0.0-alpha.1",
+    "puppeteer": "^21.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "react-refresh": "^0.14.0",
     "terser-webpack-plugin": "^5.3.1",
     "webpack": "^5.70.0",
