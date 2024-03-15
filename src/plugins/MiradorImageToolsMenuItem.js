@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import TuneSharpIcon from '@material-ui/icons/TuneSharp';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import TuneSharpIcon from '@mui/icons-material/TuneSharp';
 
 const MiradorImageToolsMenuItem = ({
   enabled, handleClose, t, updateWindow, windowId,
