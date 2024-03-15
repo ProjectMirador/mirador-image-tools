@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
-import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
-import { alpha } from '@material-ui/core/styles';
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import { alpha } from '@mui/material/styles';
 
 export default class ImageFlip extends Component {
   render() {

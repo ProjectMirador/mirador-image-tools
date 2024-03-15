@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import compose from 'lodash/flowRight';
 import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
-import Slider from '@material-ui/core/Slider';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { alpha } from '@material-ui/core/styles';
+import Slider from '@mui/material/Slider';
+import { alpha } from '@mui/material/styles';
+
+import withStyles from '@mui/styles/withStyles';
 
 /** Styles for withStyles HOC */
 const styles = ({ palette, breakpoints }) => ({

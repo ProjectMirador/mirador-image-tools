@@ -1,4 +1,4 @@
-import withTheme from '@material-ui/core/styles/withTheme';
+import withTheme from '@mui/styles/withTheme';
 import * as actions from 'mirador/dist/es/src/state/actions';
 import { getWindowConfig, getViewer, getContainerId } from 'mirador/dist/es/src/state/selectors';
 import MiradorImageTools from './plugins/MiradorImageTools';

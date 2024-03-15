@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import compose from 'lodash/flowRight';
-import BrightnessIcon from '@material-ui/icons/Brightness5';
-import TonalityIcon from '@material-ui/icons/Tonality';
-import GradientIcon from '@material-ui/icons/Gradient';
-import ContrastIcon from '@material-ui/icons/ExposureSharp';
-import InvertColorsIcon from '@material-ui/icons/InvertColors';
-import TuneSharpIcon from '@material-ui/icons/TuneSharp';
-import CloseSharpIcon from '@material-ui/icons/CloseSharp';
-import ReplaySharpIcon from '@material-ui/icons/ReplaySharp';
-import { alpha } from '@material-ui/core/styles';
-import withStyles from '@material-ui/core/styles/withStyles';
-import withWidth from '@material-ui/core/withWidth';
+import BrightnessIcon from '@mui/icons-material/Brightness5';
+import TonalityIcon from '@mui/icons-material/Tonality';
+import GradientIcon from '@mui/icons-material/Gradient';
+import ContrastIcon from '@mui/icons-material/ExposureSharp';
+import InvertColorsIcon from '@mui/icons-material/InvertColors';
+import TuneSharpIcon from '@mui/icons-material/TuneSharp';
+import CloseSharpIcon from '@mui/icons-material/CloseSharp';
+import ReplaySharpIcon from '@mui/icons-material/ReplaySharp';
+import { alpha } from '@mui/material/styles';
+import withStyles from '@mui/styles/withStyles';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import ImageTool from './ImageTool';
 import ImageRotation from './ImageRotation';
 import ImageFlip from './ImageFlip';
+
+// FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
+const withWidth = () => (WrappedComponent) => (props) => <WrappedComponent {...props} width="xs" />;
 
 /** Styles for withStyles HOC */
 const styles = ({ breakpoints, palette }) => {

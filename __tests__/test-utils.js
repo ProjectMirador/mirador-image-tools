@@ -4,12 +4,12 @@ import { render } from '@testing-library/react';
 import PropTypes from 'prop-types';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider, StyledEngineProvider, adaptV4Theme } from '@mui/material/styles';
 import createRootReducer from 'mirador/dist/es/src/state/reducers/rootReducer';
 import settings from 'mirador/dist/es/src/config/settings';
 
 const rootReducer = createRootReducer();
-const theme = createTheme(settings.theme);
+const theme = createTheme(adaptV4Theme(settings.theme));
 
 /**
  * Hook up our rendered object to redux
@@ -26,9 +26,11 @@ function renderWithProviders(
   /** :nodoc: */
   function Wrapper({ children }) {
     return (
-      <ThemeProvider theme={theme}>
-        <Provider store={store}>{children}</Provider>
-      </ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <Provider store={store}>{children}</Provider>
+        </ThemeProvider>
+      </StyledEngineProvider>
     );
   }
 
