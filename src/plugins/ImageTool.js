@@ -62,7 +62,7 @@ class ImageTool extends Component {
   render() {
     const {
       children, label, max, min, value, type, variant, windowId,
-      foregroundColor, classes, width,
+      foregroundColor, classes, small,
     } = this.props;
     const { open } = this.state;
 
@@ -95,7 +95,7 @@ class ImageTool extends Component {
           className={`MuiPaper-elevation4 ${classes.slider}`}
         >
           <Slider
-            orientation={['xs', 'sm'].indexOf(width) >= 0 ? 'horizontal' : 'vertical'}
+            orientation={small ? 'horizontal' : 'vertical'}
             min={min}
             max={max}
             value={value}
@@ -118,11 +118,11 @@ ImageTool.propTypes = {
   max: PropTypes.number,
   onChange: PropTypes.func.isRequired,
   open: PropTypes.bool,
+  small: PropTypes.bool,
   type: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired,
   variant: PropTypes.string,
   windowId: PropTypes.string.isRequired,
-  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
 ImageTool.defaultProps = {
@@ -130,6 +130,7 @@ ImageTool.defaultProps = {
   min: 0,
   max: 100,
   open: false,
+  small: false,
   variant: 'slider',
 };
 
