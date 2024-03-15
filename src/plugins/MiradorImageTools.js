@@ -35,7 +35,6 @@ const Root = styled('div')(({
     + `${alpha(foregroundColor, 0)} 80% )`;
   const borderImageBottom = borderImageRight.replace('to bottom', 'to right');
   return {
-    [`& .${styledClasses.root}`]: {
       backgroundColor: alpha(backgroundColor, 0.8),
       borderRadius: 25,
       position: 'absolute',
@@ -47,7 +46,6 @@ const Root = styled('div')(({
       [breakpoints.down('sm')]: {
         flexDirection: 'column',
       },
-    },
     [`& .${styledClasses.borderContainer}`]: {
       border: 0,
       borderRight: border,
@@ -178,7 +176,7 @@ class MiradorImageTools extends Component {
 
     /** Button for toggling the menu */
     const toggleButton = (
-      <Root>
+      <div className={(isSmallDisplay && open) ? styledClasses.borderContainer : ''}>
         <MiradorMenuButton
           aria-expanded={open}
           aria-haspopup
@@ -188,10 +186,10 @@ class MiradorImageTools extends Component {
         >
           { open ? <CloseSharpIcon /> : <TuneSharpIcon /> }
         </MiradorMenuButton>
-      </Root>
+      </div>
     );
     return (
-      <div className={`MuiPaper-elevation4`}>
+      <Root className={`MuiPaper-elevation4 `}>
         {isSmallDisplay && toggleButton}
         {open
         && (
@@ -291,7 +289,7 @@ class MiradorImageTools extends Component {
         </React.Fragment>
         )}
         {!isSmallDisplay && toggleButton}
-      </div>
+      </Root>
     );
   }
 }

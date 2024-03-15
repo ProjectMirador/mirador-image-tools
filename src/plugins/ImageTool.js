@@ -101,7 +101,7 @@ class ImageTool extends Component {
         <div
           id={id}
           aria-labelledby={`${id}-label`}
-          className={`MuiPaper-elevation4`}
+          className={`MuiPaper-elevation4 ImageTool-slider`}
         >
           <Slider
             orientation={['xs', 'sm'].indexOf(width) >= 0 ? 'horizontal' : 'vertical'}
