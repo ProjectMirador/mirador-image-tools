@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import Slider from '@material-ui/core/Slider';
 import withStyles from '@material-ui/core/styles/withStyles';
-import withWidth from '@material-ui/core/withWidth';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
 /** Styles for withStyles HOC */
@@ -135,4 +134,4 @@ ImageTool.defaultProps = {
   variant: 'slider',
 };
 
-export default compose(withStyles(styles), withWidth())(ImageTool);
+export default compose(withStyles(styles))(ImageTool);

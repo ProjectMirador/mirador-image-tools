@@ -218,6 +218,7 @@ class MiradorImageTools extends Component {
               foregroundColor={foregroundColor}
               containerId={containerId}
               onChange={this.handleChange('brightness')}
+              width={width}
             >
               <BrightnessIcon />
             </ImageTool>
@@ -230,6 +231,7 @@ class MiradorImageTools extends Component {
               foregroundColor={foregroundColor}
               containerId={containerId}
               onChange={this.handleChange('contrast')}
+              width={width}
             >
               <ContrastIcon style={{ transform: 'rotate(180deg)' }} />
             </ImageTool>
@@ -242,6 +244,7 @@ class MiradorImageTools extends Component {
               foregroundColor={foregroundColor}
               containerId={containerId}
               onChange={this.handleChange('saturate')}
+              width={width}
             >
               <GradientIcon />
             </ImageTool>
@@ -255,6 +258,7 @@ class MiradorImageTools extends Component {
               foregroundColor={foregroundColor}
               containerId={containerId}
               onChange={this.handleChange('grayscale')}
+              width={width}
             >
               <TonalityIcon />
             </ImageTool>
@@ -267,6 +271,7 @@ class MiradorImageTools extends Component {
               foregroundColor={foregroundColor}
               containerId={containerId}
               onChange={this.handleChange('invert')}
+              width={width}
             >
               <InvertColorsIcon />
             </ImageTool>
