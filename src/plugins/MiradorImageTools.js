@@ -41,15 +41,15 @@ const Root = styled('div')(({
     + `${alpha(foregroundColor, 0)} 80% )`;
   const borderImageBottom = borderImageRight.replace('to bottom', 'to right');
   return {
-      backgroundColor: alpha(backgroundColor, 0.8),
-      borderRadius: 25,
-      position: 'absolute',
-      top: 8,
-      right: 8,
-      zIndex: 999,
-      display: 'flex',
-      flexDirection: 'row',
-      ...(variant == 'sm' ? { flexDirection: 'column' } : {}),
+    backgroundColor: alpha(backgroundColor, 0.8),
+    borderRadius: 25,
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    zIndex: 999,
+    display: 'flex',
+    flexDirection: 'row',
+    ...(variant === 'sm' ? { flexDirection: 'column' } : {}),
     [`& .${styledClasses.borderContainer}`]: {
       border: 0,
       borderRight: border,
@@ -57,7 +57,7 @@ const Root = styled('div')(({
       borderImageSource: borderImageRight,
       display: 'inline-flex',
       flexDirection: 'row',
-      ...(variant == 'sm' ? {
+      ...(variant === 'sm' ? {
         flexDirection: 'column',
         borderBottom: border,
         borderRight: 'none',
@@ -191,7 +191,7 @@ class MiradorImageTools extends Component {
     const variant = (width && width < 480) ? 'sm' : undefined;
     return (
       <SizeContainer>
-        <Root className={`MuiPaper-elevation4 `} variant={variant}>
+        <Root className="MuiPaper-elevation4 " variant={variant}>
           {isSmallDisplay && toggleButton}
           {open
           && (
@@ -288,17 +288,15 @@ class MiradorImageTools extends Component {
 }
 
 MiradorImageTools.propTypes = {
-  classes: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   enabled: PropTypes.bool,
   open: PropTypes.bool,
   size: {},
   t: PropTypes.func.isRequired,
-  theme: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   updateViewport: PropTypes.func.isRequired,
   updateWindow: PropTypes.func.isRequired,
   viewer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   viewConfig: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  windowId: PropTypes.string.isRequired
+  windowId: PropTypes.string.isRequired,
 };
 
 MiradorImageTools.defaultProps = {
@@ -306,7 +304,7 @@ MiradorImageTools.defaultProps = {
   open: true,
   size: {},
   viewer: undefined,
-  viewConfig: {}
+  viewConfig: {},
 };
 
 export default compose(withSize())(MiradorImageTools);

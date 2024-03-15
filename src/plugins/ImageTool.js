@@ -11,7 +11,7 @@ const styledClasses = {
 };
 
 const Root = styled('div')(({
-  theme: { palette, breakpoints },
+  theme: { palette },
   size,
   variant,
 }) => {
@@ -20,8 +20,8 @@ const Root = styled('div')(({
 
   return {
     '& button': {
-      ...(variant == 'toggled' && { backgroundColor: alpha(foregroundColor, 0.25) }),
-      ...(variant == 'open' && { backgroundColor: alpha(foregroundColor, 0.1) })
+      ...(variant === 'toggled' && { backgroundColor: alpha(foregroundColor, 0.25) }),
+      ...(variant === 'open' && { backgroundColor: alpha(foregroundColor, 0.1) }),
     },
     [`& .${styledClasses.slider}`]: {
       backgroundColor: alpha(palette.shades.main, 0.8),
@@ -33,7 +33,7 @@ const Root = styled('div')(({
       zIndex: 100,
       marginLeft: 2,
       padding: [[2, 7, 2, 7]],
-      ...(size == 'sm' && {
+      ...(size === 'sm' && {
         top: 'auto',
         right: 48,
         width: 150,
@@ -42,8 +42,8 @@ const Root = styled('div')(({
         marginBottom: 2,
         padding: [[4, 2, 4, 2]],
       }),
-    }
-  }
+    },
+  };
 });
 class ImageTool extends Component {
   constructor(props) {
@@ -84,7 +84,7 @@ class ImageTool extends Component {
     const id = `${windowId}-${type}`;
 
     return (
-      <Root style={{ display: 'inline-block' }} size={width} variant={(toggled ? 'toggled' : open ? 'open' : undefined)}>
+      <Root style={{ display: 'inline-block' }} size={width} variant={(toggled ? 'toggled' : (open ? 'open' : undefined))}>
         <MiradorMenuButton
           id={`${id}-label`}
           aria-label={label}
@@ -99,7 +99,7 @@ class ImageTool extends Component {
         <div
           id={id}
           aria-labelledby={`${id}-label`}
-          className={`MuiPaper-elevation4 ImageTool-slider`}
+          className="MuiPaper-elevation4 ImageTool-slider"
         >
           <Slider
             orientation={['xs', 'sm'].indexOf(width) >= 0 ? 'horizontal' : 'vertical'}
