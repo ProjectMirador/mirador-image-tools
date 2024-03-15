@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import compose from 'lodash/flowRight';
 import PropTypes from 'prop-types';
-import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
+import MiradorMenuButton from 'mirador/dist/es/src/containers/MiradorMenuButton';
 import Slider from '@mui/material/Slider';
 import { alpha } from '@mui/material/styles';
 
@@ -61,7 +61,7 @@ class ImageTool extends Component {
 
   render() {
     const {
-      children, containerId, label, max, min, value, type, variant, windowId,
+      children, label, max, min, value, type, variant, windowId,
       foregroundColor, classes, width,
     } = this.props;
     const { open } = this.state;
@@ -80,7 +80,6 @@ class ImageTool extends Component {
         <MiradorMenuButton
           id={`${id}-label`}
           aria-label={label}
-          containerId={containerId}
           onClick={this.handleClick}
           aria-expanded={open}
           aria-controls={id}
@@ -113,7 +112,6 @@ ImageTool.propTypes = {
   children: PropTypes.node.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   classes: PropTypes.object.isRequired,
-  containerId: PropTypes.string.isRequired,
   foregroundColor: PropTypes.string,
   label: PropTypes.string.isRequired,
   min: PropTypes.number,

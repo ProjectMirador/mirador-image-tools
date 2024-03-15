@@ -11,7 +11,7 @@ import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import ReplaySharpIcon from '@mui/icons-material/ReplaySharp';
 import { alpha } from '@mui/material/styles';
 import withStyles from '@mui/styles/withStyles';
-import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
+import MiradorMenuButton from 'mirador/dist/es/src/containers/MiradorMenuButton';
 import ImageTool from './ImageTool';
 import ImageRotation from './ImageRotation';
 import ImageFlip from './ImageFlip';
@@ -151,7 +151,7 @@ class MiradorImageTools extends Component {
 
   render() {
     const {
-      classes, containerId, enabled, open, viewer, windowId, width,
+      classes, enabled, open, viewer, windowId, width,
       theme: { palette },
       viewConfig: {
         flip = false,
@@ -177,7 +177,6 @@ class MiradorImageTools extends Component {
           aria-expanded={open}
           aria-haspopup
           aria-label={t('collapse', { context: open ? 'open' : 'close' })}
-          containerId={containerId}
           onClick={this.toggleState}
         >
           { open ? <CloseSharpIcon /> : <TuneSharpIcon /> }
@@ -192,13 +191,11 @@ class MiradorImageTools extends Component {
         <React.Fragment>
           <div className={classes.borderContainer}>
             <ImageRotation
-              containerId={containerId}
               label={t('rotateRight')}
               onClick={() => this.toggleRotate(90)}
               variant="right"
             />
             <ImageRotation
-              containerId={containerId}
               label={t('rotateLeft')}
               onClick={() => this.toggleRotate(-90)}
               variant="left"
@@ -207,7 +204,6 @@ class MiradorImageTools extends Component {
               label={t('flip')}
               onClick={this.toggleFlip}
               flipped={flip}
-              containerId={containerId}
             />
           </div>
           <div className={classes.borderContainer}>
@@ -218,7 +214,6 @@ class MiradorImageTools extends Component {
               windowId={windowId}
               value={brightness}
               foregroundColor={foregroundColor}
-              containerId={containerId}
               onChange={this.handleChange('brightness')}
               width={width}
             >
@@ -231,7 +226,6 @@ class MiradorImageTools extends Component {
               windowId={windowId}
               value={contrast}
               foregroundColor={foregroundColor}
-              containerId={containerId}
               onChange={this.handleChange('contrast')}
               width={width}
             >
@@ -244,7 +238,6 @@ class MiradorImageTools extends Component {
               windowId={windowId}
               value={saturate}
               foregroundColor={foregroundColor}
-              containerId={containerId}
               onChange={this.handleChange('saturate')}
               width={width}
             >
@@ -258,7 +251,6 @@ class MiradorImageTools extends Component {
               value={grayscale}
               backgroundColor={backgroundColor}
               foregroundColor={foregroundColor}
-              containerId={containerId}
               onChange={this.handleChange('grayscale')}
               width={width}
             >
@@ -271,7 +263,6 @@ class MiradorImageTools extends Component {
               windowId={windowId}
               value={invert}
               foregroundColor={foregroundColor}
-              containerId={containerId}
               onChange={this.handleChange('invert')}
               width={width}
             >
@@ -281,7 +272,6 @@ class MiradorImageTools extends Component {
           <div className={isSmallDisplay ? '' : classes.borderContainer}>
             <MiradorMenuButton
               aria-label={t('revert')}
-              containerId={containerId}
               onClick={this.handleReset}
             >
               <ReplaySharpIcon />
@@ -297,7 +287,6 @@ class MiradorImageTools extends Component {
 
 MiradorImageTools.propTypes = {
   classes: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  containerId: PropTypes.string.isRequired,
   enabled: PropTypes.bool,
   open: PropTypes.bool,
   t: PropTypes.func.isRequired,
