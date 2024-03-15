@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
+import MiradorMenuButton from 'mirador/dist/es/src/containers/MiradorMenuButton';
 import RotateRightIcon from '@mui/icons-material/RotateRight';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 
@@ -19,7 +19,6 @@ export default class ImageRotation extends Component {
 }
 
 ImageRotation.propTypes = {
-  containerId: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   variant: PropTypes.string.isRequired,
 };

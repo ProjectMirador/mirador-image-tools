@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from './test-utils';
-import { TestableImageTools as MiradorImageTools } from '../src/plugins/MiradorImageTools';
+import MiradorImageTools from '../src/plugins/MiradorImageTools';
 
 const mockPalette = {
   palette: {

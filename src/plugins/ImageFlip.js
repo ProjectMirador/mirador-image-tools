@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
+import MiradorMenuButton from 'mirador/dist/es/src/containers/MiradorMenuButton';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import { alpha } from '@mui/material/styles';
 
@@ -24,7 +24,6 @@ export default class ImageFlip extends Component {
 
 ImageFlip.propTypes = {
   backgroundColor: PropTypes.string,
-  containerId: PropTypes.string.isRequired,
   foregroundColor: PropTypes.string,
   flipped: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
