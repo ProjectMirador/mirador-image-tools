@@ -9,7 +9,7 @@ import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import TuneSharpIcon from '@material-ui/icons/TuneSharp';
 import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import ReplaySharpIcon from '@material-ui/icons/ReplaySharp';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { alpha } from '@material-ui/core/styles';
 import withStyles from '@material-ui/core/styles/withStyles';
 import withWidth from '@material-ui/core/withWidth';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
@@ -21,16 +21,16 @@ import ImageFlip from './ImageFlip';
 const styles = ({ breakpoints, palette }) => {
   const backgroundColor = palette.shades.main;
   const foregroundColor = palette.getContrastText(backgroundColor);
-  const border = `1px solid ${fade(foregroundColor, 0.2)}`;
+  const border = `1px solid ${alpha(foregroundColor, 0.2)}`;
   const borderImageRight = 'linear-gradient('
     + 'to bottom, '
-    + `${fade(foregroundColor, 0)} 20%, `
-    + `${fade(foregroundColor, 0.2)} 20% 80%, `
-    + `${fade(foregroundColor, 0)} 80% )`;
+    + `${alpha(foregroundColor, 0)} 20%, `
+    + `${alpha(foregroundColor, 0.2)} 20% 80%, `
+    + `${alpha(foregroundColor, 0)} 80% )`;
   const borderImageBottom = borderImageRight.replace('to bottom', 'to right');
   return {
     root: {
-      backgroundColor: fade(backgroundColor, 0.8),
+      backgroundColor: alpha(backgroundColor, 0.8),
       borderRadius: 25,
       position: 'absolute',
       top: 8,

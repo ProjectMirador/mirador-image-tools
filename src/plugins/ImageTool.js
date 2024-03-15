@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import Slider from '@material-ui/core/Slider';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { alpha } from '@material-ui/core/styles';
 
 /** Styles for withStyles HOC */
 const styles = ({ palette, breakpoints }) => ({
   slider: {
-    backgroundColor: fade(palette.shades.main, 0.8),
+    backgroundColor: alpha(palette.shades.main, 0.8),
     borderRadius: 25,
     top: 48,
     marginTop: 2,
@@ -71,7 +71,7 @@ class ImageTool extends Component {
 
     let bubbleBg;
     if (open || toggled) {
-      bubbleBg = fade(foregroundColor, open ? 0.1 : 0.25);
+      bubbleBg = alpha(foregroundColor, open ? 0.1 : 0.25);
     }
 
     return (
