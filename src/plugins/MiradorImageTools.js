@@ -10,10 +10,10 @@ import InvertColorsIcon from '@mui/icons-material/InvertColors';
 import TuneSharpIcon from '@mui/icons-material/TuneSharp';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import ReplaySharpIcon from '@mui/icons-material/ReplaySharp';
+import LinearScaleIcon from '@mui/icons-material/LinearScale';
 import { styled, alpha } from '@mui/material/styles';
 import MiradorMenuButton from 'mirador/dist/es/src/containers/MiradorMenuButton';
 import ImageTool from './ImageTool';
-import ImageRotation from './ImageRotation';
 import ImageFlip from './ImageFlip';
 
 const SizeContainer = styled('div')(() => ({
@@ -78,7 +78,6 @@ class MiradorImageTools extends Component {
   constructor(props) {
     super(props);
     this.toggleState = this.toggleState.bind(this);
-    this.toggleRotate = this.toggleRotate.bind(this);
     this.toggleFlip = this.toggleFlip.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleReset = this.handleReset.bind(this);
@@ -148,14 +147,6 @@ class MiradorImageTools extends Component {
     updateWindow(windowId, { imageToolsOpen: !open });
   }
 
-  toggleRotate(value) {
-    const { updateViewport, viewConfig: { flip = false, rotation = 0 }, windowId } = this.props;
-
-    const offset = flip ? -1 * value : value;
-
-    updateViewport(windowId, { rotation: (rotation + offset) % 360 });
-  }
-
   toggleFlip() {
     const { updateViewport, viewConfig: { flip = false }, windowId } = this.props;
 
@@ -166,6 +157,7 @@ class MiradorImageTools extends Component {
     const {
       enabled, open, viewer, windowId,
       viewConfig: {
+        rotation = 0,
         flip = false,
         brightness = 100,
         contrast = 100,
@@ -201,16 +193,18 @@ class MiradorImageTools extends Component {
           && (
           <React.Fragment>
             <ToolContainer>
-              <ImageRotation
-                label={t('rotateRight')}
-                onClick={() => this.toggleRotate(90)}
-                variant="right"
-              />
-              <ImageRotation
-                label={t('rotateLeft')}
-                onClick={() => this.toggleRotate(-90)}
-                variant="left"
-              />
+              <ImageTool
+                type="rotation"
+                label={t('rotation')}
+                min={-180}
+                max={180}
+                windowId={windowId}
+                value={rotation}
+                onChange={this.handleChange('rotation')}
+                small={isSmallDisplay}
+              >
+                <LinearScaleIcon />
+              </ImageTool>
               <ImageFlip
                 label={t('flip')}
                 onClick={this.toggleFlip}
