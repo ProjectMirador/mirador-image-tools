@@ -39,8 +39,7 @@ describe('MiradorImageTools', () => {
   it('renders ImageRotation', () => {
     createWrapper();
 
-    expect(screen.getByRole('button', { name: 'rotateLeft' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'rotateRight' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'rotation' })).toBeInTheDocument();
   });
   it('renders ImageFlip', () => {
     createWrapper();
