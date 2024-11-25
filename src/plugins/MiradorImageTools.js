@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import compose from 'lodash/flowRight';
-import { withSize } from 'react-sizeme';
+import { withSize } from 'mirador/dist/es/src/extend/withSize';
+import { withRef } from 'mirador/dist/es/src/extend/withRef';
 import BrightnessIcon from '@mui/icons-material/Brightness5';
 import TonalityIcon from '@mui/icons-material/Tonality';
 import GradientIcon from '@mui/icons-material/Gradient';
@@ -74,34 +75,35 @@ const Root = styled('div')(({ small, theme: { palette } }) => {
   };
 });
 
-class MiradorImageTools extends Component {
-  constructor(props) {
-    super(props);
-    this.toggleState = this.toggleState.bind(this);
-    this.toggleRotate = this.toggleRotate.bind(this);
-    this.toggleFlip = this.toggleFlip.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleReset = this.handleReset.bind(this);
-  }
+const MiradorImageTools = (({
+  enabled,
+  open,
+  viewer,
+  windowId,
+  viewConfig,
+  size,
+  updateViewport,
+  updateWindow,
+  t,
+  innerRef,
+}) => {
+  const [isSmallDisplay, setIsSmallDisplay] = useState(false);
 
-  componentDidMount() {
-    const { viewer } = this.props;
-    if (viewer) this.applyFilters();
-  }
+  const {
+    flip = false,
+    brightness = 100,
+    contrast = 100,
+    saturate = 100,
+    grayscale = 0,
+    invert = 0,
+  } = viewConfig;
 
-  componentDidUpdate(prevProps) {
-    const { viewConfig, viewer } = this.props;
-    if (viewer && viewConfig !== prevProps.viewConfig) this.applyFilters();
-  }
+  const handleChange = (param) => (value) => {
+    updateViewport(windowId, { [param]: value });
+  };
 
-  handleChange(param) {
-    const { updateViewport, windowId } = this.props;
-    return (value) => updateViewport(windowId, { [param]: value });
-  }
-
-  handleReset() {
-    const { updateViewport, windowId } = this.props;
-    const viewConfig = {
+  const handleReset = () => {
+    const viewConfigReset = {
       rotation: 0,
       flip: false,
       brightness: 100,
@@ -110,22 +112,11 @@ class MiradorImageTools extends Component {
       grayscale: 0,
       invert: 0,
     };
+    updateViewport(windowId, viewConfigReset);
+  };
 
-    updateViewport(windowId, viewConfig);
-  }
-
-  applyFilters() {
-    const {
-      viewConfig: {
-        brightness = 100,
-        contrast = 100,
-        saturate = 100,
-        grayscale = 0,
-        invert = 0,
-      },
-      viewer: { canvas },
-    } = this.props;
-
+  const applyFilters = () => {
+    const { canvas } = viewer || {};
     if (!canvas) return;
 
     const controlledFilters = ['brightness', 'contrast', 'saturate', 'grayscale', 'invert'];
@@ -140,80 +131,64 @@ class MiradorImageTools extends Component {
     newFilters.push(`grayscale(${grayscale}%)`);
     newFilters.push(`invert(${invert}%)`);
     canvas.style.filter = newFilters.join(' ');
-  }
+  };
 
-  toggleState() {
-    const { open, updateWindow, windowId } = this.props;
-
+  const toggleState = () => {
     updateWindow(windowId, { imageToolsOpen: !open });
-  }
+  };
 
-  toggleRotate(value) {
-    const { updateViewport, viewConfig: { flip = false, rotation = 0 }, windowId } = this.props;
-
+  const toggleRotate = (value) => {
     const offset = flip ? -1 * value : value;
+    updateViewport(windowId, { rotation: (viewConfig.rotation + offset) % 360 });
+  };
 
-    updateViewport(windowId, { rotation: (rotation + offset) % 360 });
-  }
-
-  toggleFlip() {
-    const { updateViewport, viewConfig: { flip = false }, windowId } = this.props;
-
+  const toggleFlip = () => {
     updateViewport(windowId, { flip: !flip });
-  }
+  };
 
-  render() {
-    const {
-      enabled, open, viewer, windowId,
-      viewConfig: {
-        flip = false,
-        brightness = 100,
-        contrast = 100,
-        saturate = 100,
-        grayscale = 0,
-        invert = 0,
-      }, size: { width },
-      t,
-    } = this.props;
+  useEffect(() => {
+    setIsSmallDisplay(size.width && size.width < 480);
+  }, [size.width]);
 
-    if (!viewer || !enabled) return null;
+  useEffect(() => {
+    if (viewer) applyFilters();
+  }, [viewer, viewConfig]);
 
-    const isSmallDisplay = width && (width < 480);
+  if (!viewer || !enabled) return <SizeContainer ref={innerRef} />;
 
-    /** Button for toggling the menu */
-    const toggleButton = (
-      <ToggleContainer>
-        <MiradorMenuButton
-          aria-expanded={open}
-          aria-haspopup
-          aria-label={t('collapse', { context: open ? 'open' : 'close' })}
-          onClick={this.toggleState}
-        >
-          { open ? <CloseSharpIcon /> : <TuneSharpIcon /> }
-        </MiradorMenuButton>
-      </ToggleContainer>
-    );
-    return (
-      <SizeContainer>
-        <Root className="MuiPaper-elevation4" small={isSmallDisplay}>
-          {isSmallDisplay && toggleButton}
-          {open
-          && (
+  const toggleButton = (
+    <ToggleContainer>
+      <MiradorMenuButton
+        aria-expanded={open}
+        aria-haspopup
+        aria-label={t('collapse', { context: open ? 'open' : 'close' })}
+        onClick={toggleState}
+      >
+        {open ? <CloseSharpIcon /> : <TuneSharpIcon />}
+      </MiradorMenuButton>
+    </ToggleContainer>
+  );
+
+  return (
+    <SizeContainer ref={innerRef}>
+      <Root className="MuiPaper-elevation4" small={isSmallDisplay}>
+        {isSmallDisplay && toggleButton}
+        {open && (
           <React.Fragment>
             <ToolContainer>
               <ImageRotation
                 label={t('rotateRight')}
-                onClick={() => this.toggleRotate(90)}
+                onClick={() => toggleRotate(90)}
                 variant="right"
               />
               <ImageRotation
                 label={t('rotateLeft')}
-                onClick={() => this.toggleRotate(-90)}
+                onClick={() => toggleRotate(-90)}
                 variant="left"
               />
               <ImageFlip
                 label={t('flip')}
-                onClick={this.toggleFlip}
+                onClick={toggleFlip}
                 flipped={flip}
               />
             </ToolContainer>
@@ -224,7 +199,7 @@ class MiradorImageTools extends Component {
                 max={200}
                 windowId={windowId}
                 value={brightness}
-                onChange={this.handleChange('brightness')}
+                onChange={handleChange('brightness')}
                 small={isSmallDisplay}
               >
                 <BrightnessIcon />
@@ -235,7 +210,7 @@ class MiradorImageTools extends Component {
                 max={200}
                 windowId={windowId}
                 value={contrast}
-                onChange={this.handleChange('contrast')}
+                onChange={handleChange('contrast')}
                 small={isSmallDisplay}
               >
                 <ContrastIcon style={{ transform: 'rotate(180deg)' }} />
@@ -246,7 +221,7 @@ class MiradorImageTools extends Component {
                 max={200}
                 windowId={windowId}
                 value={saturate}
-                onChange={this.handleChange('saturate')}
+                onChange={handleChange('saturate')}
                 small={isSmallDisplay}
               >
                 <GradientIcon />
@@ -257,7 +232,7 @@ class MiradorImageTools extends Component {
                 label={t('greyscale')}
                 windowId={windowId}
                 value={grayscale}
-                onChange={this.handleChange('grayscale')}
+                onChange={handleChange('grayscale')}
                 small={isSmallDisplay}
               >
                 <TonalityIcon />
@@ -268,7 +243,7 @@ class MiradorImageTools extends Component {
                 label={t('invert')}
                 windowId={windowId}
                 value={invert}
-                onChange={this.handleChange('invert')}
+                onChange={handleChange('invert')}
                 small={isSmallDisplay}
               >
                 <InvertColorsIcon />
@@ -277,36 +252,41 @@ class MiradorImageTools extends Component {
             <ToolContainer>
               <MiradorMenuButton
                 aria-label={t('revert')}
-                onClick={this.handleReset}
+                onClick={handleReset}
               >
                 <ReplaySharpIcon />
               </MiradorMenuButton>
             </ToolContainer>
           </React.Fragment>
-          )}
-          {!isSmallDisplay && toggleButton}
-        </Root>
-      </SizeContainer>
-    );
-  }
-}
+        )}
+        {!isSmallDisplay && toggleButton}
+      </Root>
+    </SizeContainer>
+  );
+});
 
 MiradorImageTools.propTypes = {
   enabled: PropTypes.bool,
   open: PropTypes.bool,
-  size: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  size: PropTypes.shape({
+    width: PropTypes.number,
+    height: PropTypes.number,
+  }).isRequired,
   t: PropTypes.func.isRequired,
   updateViewport: PropTypes.func.isRequired,
   updateWindow: PropTypes.func.isRequired,
   viewer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   viewConfig: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   windowId: PropTypes.string.isRequired,
+  innerRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.any,
+  ]).isRequired,
 };
 
 MiradorImageTools.defaultProps = {
   enabled: true,
   open: true,
-  size: {},
   viewer: undefined,
   viewConfig: {},
 };
@@ -314,4 +294,4 @@ MiradorImageTools.defaultProps = {
 // Export without wrapping HOC for testing.
 export const TestableImageTools = MiradorImageTools;
 
-export default compose(withSize())(MiradorImageTools);
+export default compose(withSize(), withRef())(MiradorImageTools);
