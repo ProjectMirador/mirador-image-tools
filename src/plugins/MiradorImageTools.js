@@ -27,9 +27,9 @@ const ToggleContainer = styled('div')(() => ({
 }));
 
 const ToolContainer = styled('div')(() => ({
-  display: 'flex',
   border: 0,
   borderImageSlice: 1,
+  display: 'flex',
 }));
 
 /** Styles for withStyles HOC */
@@ -77,15 +77,15 @@ const Root = styled('div')(({ small, theme: { palette } }) => {
 
 const MiradorImageTools = (({
   enabled,
+  innerRef,
   open,
-  viewer,
-  windowId,
-  viewConfig,
   size,
+  t,
   updateViewport,
   updateWindow,
-  t,
-  innerRef,
+  viewer,
+  viewConfig,
+  windowId,
 }) => {
   const [isSmallDisplay, setIsSmallDisplay] = useState(false);
 
@@ -267,6 +267,10 @@ const MiradorImageTools = (({
 
 MiradorImageTools.propTypes = {
   enabled: PropTypes.bool,
+  innerRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.any,
+  ]).isRequired,
   open: PropTypes.bool,
   size: PropTypes.shape({
     width: PropTypes.number,
@@ -278,10 +282,6 @@ MiradorImageTools.propTypes = {
   viewer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   viewConfig: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   windowId: PropTypes.string.isRequired,
-  innerRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.any,
-  ]).isRequired,
 };
 
 MiradorImageTools.defaultProps = {
