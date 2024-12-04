@@ -19,6 +19,7 @@ function createWrapper(props) {
       windowId="x"
       width="sm"
       theme={mockPalette}
+      size={{ width: 100, height: 200 }}
       t={(k) => k}
       {...props}
     />,
