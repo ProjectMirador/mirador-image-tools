@@ -1,5 +1,10 @@
-import * as actions from 'mirador/dist/es/src/state/actions';
-import { getWindowConfig, getViewer, getContainerId } from 'mirador/dist/es/src/state/selectors';
+import {
+  getContainerId,
+  getWindowConfig,
+  getViewer,
+  updateViewport,
+  updateWindow,
+} from 'mirador';
 import MiradorImageTools from './plugins/MiradorImageTools';
 import MiradorImageToolsMenuItem from './plugins/MiradorImageToolsMenuItem';
 import translations from './translations';
@@ -8,8 +13,8 @@ export const miradorImageToolsPlugin = [
   {
     target: 'OpenSeadragonViewer',
     mapDispatchToProps: {
-      updateWindow: actions.updateWindow,
-      updateViewport: actions.updateViewport,
+      updateWindow,
+      updateViewport,
     },
     mapStateToProps: (state, { windowId }) => ({
       containerId: getContainerId(state),
@@ -28,7 +33,7 @@ export const miradorImageToolsPlugin = [
     component: MiradorImageToolsMenuItem,
     mode: 'add',
     mapDispatchToProps: {
-      updateWindow: actions.updateWindow,
+      updateWindow,
     },
     mapStateToProps: (state, { windowId }) => ({
       enabled: getWindowConfig(state, { windowId }).imageToolsEnabled || false,
