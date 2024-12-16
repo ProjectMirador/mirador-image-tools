@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import compose from 'lodash/flowRight';
-import { withSize } from 'mirador/dist/es/src/extend/withSize';
-import { withRef } from 'mirador/dist/es/src/extend/withRef';
 import BrightnessIcon from '@mui/icons-material/Brightness5';
 import TonalityIcon from '@mui/icons-material/Tonality';
 import GradientIcon from '@mui/icons-material/Gradient';
@@ -12,7 +9,9 @@ import TuneSharpIcon from '@mui/icons-material/TuneSharp';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import ReplaySharpIcon from '@mui/icons-material/ReplaySharp';
 import { styled, alpha } from '@mui/material/styles';
-import MiradorMenuButton from 'mirador/dist/es/src/containers/MiradorMenuButton';
+import { useElementSize } from '@custom-react-hooks/use-element-size';
+import mergeRefs from 'merge-refs';
+import { MiradorMenuButton } from 'mirador';
 import ImageTool from './ImageTool';
 import ImageRotation from './ImageRotation';
 import ImageFlip from './ImageFlip';
@@ -79,7 +78,6 @@ const MiradorImageTools = (({
   enabled,
   innerRef,
   open,
-  size,
   t,
   updateViewport,
   updateWindow,
@@ -146,6 +144,8 @@ const MiradorImageTools = (({
     updateViewport(windowId, { flip: !flip });
   };
 
+  const [sizeRef, size] = useElementSize();
+
   useEffect(() => {
     setIsSmallDisplay(size.width && size.width < 480);
   }, [size.width]);
@@ -154,7 +154,7 @@ const MiradorImageTools = (({
     if (viewer) applyFilters();
   }, [viewer, viewConfig]);
 
-  if (!viewer || !enabled) return <SizeContainer ref={innerRef} />;
+  if (!viewer || !enabled) return <SizeContainer ref={mergeRefs(innerRef, sizeRef)} />;
 
   const toggleButton = (
     <ToggleContainer>
@@ -170,7 +170,7 @@ const MiradorImageTools = (({
   );
 
   return (
-    <SizeContainer ref={innerRef}>
+    <SizeContainer ref={mergeRefs(innerRef, sizeRef)}>
       <Root className="MuiPaper-elevation4" small={isSmallDisplay}>
         {isSmallDisplay && toggleButton}
         {open && (
@@ -294,4 +294,4 @@ MiradorImageTools.defaultProps = {
 // Export without wrapping HOC for testing.
 export const TestableImageTools = MiradorImageTools;
 
-export default compose(withSize(), withRef())(MiradorImageTools);
+export default MiradorImageTools;

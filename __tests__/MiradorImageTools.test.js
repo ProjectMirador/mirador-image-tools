@@ -9,6 +9,10 @@ const mockPalette = {
   },
 };
 
+jest.mock('@custom-react-hooks/use-element-size', () => ({
+  useElementSize: () => ([undefined, { width: 100, height: 200 }]),
+}));
+
 function createWrapper(props) {
   return render(
     <MiradorImageTools
@@ -19,7 +23,6 @@ function createWrapper(props) {
       windowId="x"
       width="sm"
       theme={mockPalette}
-      size={{ width: 100, height: 200 }}
       t={(k) => k}
       {...props}
     />,

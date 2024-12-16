@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import MiradorMenuButton from 'mirador/dist/es/src/containers/MiradorMenuButton';
+import { MiradorMenuButton } from 'mirador';
 import RotateRightIcon from '@mui/icons-material/RotateRight';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 
