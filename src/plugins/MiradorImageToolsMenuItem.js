@@ -6,7 +6,11 @@ import ListItemText from '@mui/material/ListItemText';
 import TuneSharpIcon from '@mui/icons-material/TuneSharp';
 
 const MiradorImageToolsMenuItem = ({
-  enabled, handleClose, t, updateWindow, windowId,
+  enabled = true,
+  handleClose,
+  t,
+  updateWindow,
+  windowId,
 }) => {
   const handleClickOpen = () => {
     handleClose();
@@ -31,10 +35,6 @@ MiradorImageToolsMenuItem.propTypes = {
   t: PropTypes.func.isRequired,
   updateWindow: PropTypes.func.isRequired,
   windowId: PropTypes.string.isRequired,
-};
-
-MiradorImageToolsMenuItem.defaultProps = {
-  enabled: true,
 };
 
 export default MiradorImageToolsMenuItem;

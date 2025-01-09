@@ -4,8 +4,8 @@ import { TestableImageTools as MiradorImageTools } from '../src/plugins/MiradorI
 
 const mockPalette = {
   palette: {
-    shades: { main: 'rgb(255, 255, 255)' },
     getContrastText: () => 'rgb(0, 0, 0)',
+    shades: { main: 'rgb(255, 255, 255)' },
   },
 };
 

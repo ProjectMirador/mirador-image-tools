@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import BrightnessIcon from '@mui/icons-material/Brightness5';
 import TonalityIcon from '@mui/icons-material/Tonality';
@@ -20,17 +20,6 @@ const SizeContainer = styled('div')(() => ({
   position: 'static !important',
 }));
 
-const ToggleContainer = styled('div')(() => ({
-  border: 0,
-  borderImageSlice: 1,
-}));
-
-const ToolContainer = styled('div')(() => ({
-  border: 0,
-  borderImageSlice: 1,
-  display: 'flex',
-}));
-
 /** Styles for withStyles HOC */
 const Root = styled('div')(({ small, theme: { palette } }) => {
   const backgroundColor = palette.shades.main;
@@ -44,45 +33,28 @@ const Root = styled('div')(({ small, theme: { palette } }) => {
   const borderImageBottom = borderImageRight.replace('to bottom', 'to right');
   return {
     backgroundColor: alpha(backgroundColor, 0.8),
+    borderBottom: small ? border : 'none',
+    borderImageSource: small ? borderImageBottom : borderImageRight,
     borderRadius: 25,
-    position: 'absolute',
-    top: 8,
-    right: 8,
-    zIndex: 999,
     display: 'flex',
     flexDirection: 'row',
+    position: 'absolute',
+    right: 8,
+    top: 8,
+    zIndex: 999,
     ...(small && { flexDirection: 'column' }),
-    [ToggleContainer]: {
-      ...(small && {
-        borderBottom: border,
-        borderImageSource: borderImageBottom,
-        display: 'flex',
-      }),
-    },
-    [ToolContainer]: {
-      ...(!small && {
-        borderRight: border,
-        borderImageSource: borderImageRight,
-        flexDirection: 'row',
-      }),
-      ...(small && {
-        flexDirection: 'column',
-        borderBottom: border,
-        borderImageSource: borderImageBottom,
-      }),
-    },
   };
 });
 
-const MiradorImageTools = (({
-  enabled,
-  innerRef,
-  open,
+const MiradorImageTools = ({
+  enabled = true,
+  open = true,
+  innerRef = null,
   t,
   updateViewport,
   updateWindow,
-  viewer,
-  viewConfig,
+  viewer = {},
+  viewConfig = {},
   windowId,
 }) => {
   const [isSmallDisplay, setIsSmallDisplay] = useState(false);
@@ -102,18 +74,19 @@ const MiradorImageTools = (({
 
   const handleReset = () => {
     const viewConfigReset = {
-      rotation: 0,
-      flip: false,
       brightness: 100,
       contrast: 100,
-      saturate: 100,
+      flip: false,
       grayscale: 0,
       invert: 0,
+      rotation: 0,
+      saturate: 100,
     };
     updateViewport(windowId, viewConfigReset);
   };
 
-  const applyFilters = () => {
+  // Wrap applyFilters in useCallback to prevent unnecessary re-renders
+  const applyFilters = useCallback(() => {
     const { canvas } = viewer || {};
     if (!canvas) return;
 
@@ -129,7 +102,7 @@ const MiradorImageTools = (({
     newFilters.push(`grayscale(${grayscale}%)`);
     newFilters.push(`invert(${invert}%)`);
     canvas.style.filter = newFilters.join(' ');
-  };
+  }, [viewer, brightness, contrast, saturate, grayscale, invert]);
 
   const toggleState = () => {
     updateWindow(windowId, { imageToolsOpen: !open });
@@ -152,12 +125,12 @@ const MiradorImageTools = (({
 
   useEffect(() => {
     if (viewer) applyFilters();
-  }, [viewer, viewConfig]);
+  }, [applyFilters, viewer]);
 
   if (!viewer || !enabled) return <SizeContainer ref={mergeRefs(innerRef, sizeRef)} />;
 
   const toggleButton = (
-    <ToggleContainer>
+    <div style={{ border: 0, borderImageSlice: 1 }}>
       <MiradorMenuButton
         aria-expanded={open}
         aria-haspopup
@@ -166,7 +139,7 @@ const MiradorImageTools = (({
       >
         {open ? <CloseSharpIcon /> : <TuneSharpIcon />}
       </MiradorMenuButton>
-    </ToggleContainer>
+    </div>
   );
 
   return (
@@ -174,8 +147,8 @@ const MiradorImageTools = (({
       <Root className="MuiPaper-elevation4" small={isSmallDisplay}>
         {isSmallDisplay && toggleButton}
         {open && (
-          <React.Fragment>
-            <ToolContainer>
+          <>
+            <div style={{ border: 0, borderImageSlice: 1, display: 'flex' }}>
               <ImageRotation
                 label={t('rotateRight')}
                 onClick={() => toggleRotate(90)}
@@ -187,12 +160,12 @@ const MiradorImageTools = (({
                 variant="left"
               />
               <ImageFlip
+                flipped={flip}
                 label={t('flip')}
                 onClick={toggleFlip}
-                flipped={flip}
               />
-            </ToolContainer>
-            <ToolContainer>
+            </div>
+            <div style={{ border: 0, borderImageSlice: 1, display: 'flex' }}>
               <ImageTool
                 type="brightness"
                 label={t('brightness')}
@@ -248,50 +221,38 @@ const MiradorImageTools = (({
               >
                 <InvertColorsIcon />
               </ImageTool>
-            </ToolContainer>
-            <ToolContainer>
+            </div>
+            <div style={{ border: 0, borderImageSlice: 1, display: 'flex' }}>
               <MiradorMenuButton
                 aria-label={t('revert')}
                 onClick={handleReset}
               >
                 <ReplaySharpIcon />
               </MiradorMenuButton>
-            </ToolContainer>
-          </React.Fragment>
+            </div>
+          </>
         )}
         {!isSmallDisplay && toggleButton}
       </Root>
     </SizeContainer>
   );
-});
+};
 
 MiradorImageTools.propTypes = {
   enabled: PropTypes.bool,
   innerRef: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.any,
-  ]).isRequired,
+  ]),
   open: PropTypes.bool,
-  size: PropTypes.shape({
-    width: PropTypes.number,
-    height: PropTypes.number,
-  }).isRequired,
   t: PropTypes.func.isRequired,
   updateViewport: PropTypes.func.isRequired,
   updateWindow: PropTypes.func.isRequired,
-  viewer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   viewConfig: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  viewer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   windowId: PropTypes.string.isRequired,
 };
 
-MiradorImageTools.defaultProps = {
-  enabled: true,
-  open: true,
-  viewer: undefined,
-  viewConfig: {},
-};
-
-// Export without wrapping HOC for testing.
 export const TestableImageTools = MiradorImageTools;
 
 export default MiradorImageTools;
