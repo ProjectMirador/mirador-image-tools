@@ -2,5 +2,8 @@
 # See https://www.netlify.com/docs/netlify-toml-reference/ for more
 
 [build]
-  command = "npm run build:demo"
-  publish = "demo/dist"
+  publish = "dist/"
+
+[[redirects]]
+  from = "/"
+  to = "/demo/src/"
