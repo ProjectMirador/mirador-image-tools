@@ -9,8 +9,8 @@ const mockPalette = {
   },
 };
 
-jest.mock('@custom-react-hooks/use-element-size', () => ({
-  useElementSize: () => ([undefined, { width: 100, height: 200 }]),
+vi.mock('@custom-react-hooks/use-element-size', () => ({
+  useElementSize: () => [undefined, { height: 200, width: 100 }],
 }));
 
 function createWrapper(props) {
