@@ -37,14 +37,20 @@ const Root = styled('div')(({ small, theme: { palette } }) => {
     borderImageSource: small ? borderImageBottom : borderImageRight,
     borderRadius: 25,
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: small ? 'column' : 'row',
     position: 'absolute',
     right: 8,
     top: 8,
     zIndex: 999,
-    ...(small && { flexDirection: 'column' }),
   };
 });
+
+const ControlContainer = styled('div')(({ small }) => ({
+  border: 0,
+  borderImageSlice: 1,
+  display: 'flex',
+  flexDirection: small ? 'column' : 'row',
+}));
 
 const MiradorImageTools = ({
   enabled = true,
@@ -85,7 +91,6 @@ const MiradorImageTools = ({
     updateViewport(windowId, viewConfigReset);
   };
 
-  // Wrap applyFilters in useCallback to prevent unnecessary re-renders
   const applyFilters = useCallback(() => {
     const { canvas } = viewer || {};
     if (!canvas) return;
@@ -148,7 +153,7 @@ const MiradorImageTools = ({
         {isSmallDisplay && toggleButton}
         {open && (
           <>
-            <div style={{ border: 0, borderImageSlice: 1, display: 'flex' }}>
+            <ControlContainer small={isSmallDisplay}>
               <ImageRotation
                 label={t('rotateRight')}
                 onClick={() => toggleRotate(90)}
@@ -164,8 +169,8 @@ const MiradorImageTools = ({
                 label={t('flip')}
                 onClick={toggleFlip}
               />
-            </div>
-            <div style={{ border: 0, borderImageSlice: 1, display: 'flex' }}>
+            </ControlContainer>
+            <ControlContainer small={isSmallDisplay}>
               <ImageTool
                 type="brightness"
                 label={t('brightness')}
@@ -221,15 +226,15 @@ const MiradorImageTools = ({
               >
                 <InvertColorsIcon />
               </ImageTool>
-            </div>
-            <div style={{ border: 0, borderImageSlice: 1, display: 'flex' }}>
+            </ControlContainer>
+            <ControlContainer small={isSmallDisplay}>
               <MiradorMenuButton
                 aria-label={t('revert')}
                 onClick={handleReset}
               >
                 <ReplaySharpIcon />
               </MiradorMenuButton>
-            </div>
+            </ControlContainer>
           </>
         )}
         {!isSmallDisplay && toggleButton}
