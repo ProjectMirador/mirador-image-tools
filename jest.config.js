@@ -12,7 +12,7 @@ module.exports = {
   ],
   // Ignore Mirador code from jest transforms
   transformIgnorePatterns: [
-    '<rootDir>/node_modules/(?!mirador|@react-dnd|react-dnd|dnd-core|react-dnd-html5-backend|dnd-multi-backend|rdndmb-html5-to-touch)',
+    '<rootDir>/node_modules/(?!mirador|@react-dnd|react-dnd|dnd-core|react-dnd-html5-backend|dnd-multi-backend|rdndmb-html5-to-touch|react-mosaic-component2|lodash-es)',
   ],
   testEnvironment: "jsdom",
   testPathIgnorePatterns: [
