@@ -40,3 +40,5 @@ export const miradorImageToolsPlugin = [
     }),
   },
 ];
+
+export default miradorImageToolsPlugin;
