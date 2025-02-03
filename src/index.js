@@ -1,3 +1,4 @@
+import '@mui/material/styles/styled';
 import {
   getContainerId,
   getWindowConfig,
@@ -11,10 +12,13 @@ import translations from './translations';
 
 export const miradorImageToolsPlugin = [
   {
-    target: 'OpenSeadragonViewer',
+    component: MiradorImageTools,
+    config: {
+      translations,
+    },
     mapDispatchToProps: {
-      updateWindow,
       updateViewport,
+      updateWindow,
     },
     mapStateToProps: (state, { windowId }) => ({
       containerId: getContainerId(state),
@@ -23,20 +27,17 @@ export const miradorImageToolsPlugin = [
       viewConfig: getViewer(state, { windowId }) || {},
     }),
     mode: 'add',
-    component: MiradorImageTools,
-    config: {
-      translations,
-    },
+    target: 'OpenSeadragonViewer',
   },
   {
-    target: 'WindowTopBarPluginMenu',
     component: MiradorImageToolsMenuItem,
-    mode: 'add',
     mapDispatchToProps: {
       updateWindow,
     },
     mapStateToProps: (state, { windowId }) => ({
       enabled: getWindowConfig(state, { windowId }).imageToolsEnabled || false,
     }),
+    mode: 'add',
+    target: 'WindowTopBarPluginMenu',
   },
 ];

@@ -4,13 +4,13 @@ import { TestableImageTools as MiradorImageTools } from '../src/plugins/MiradorI
 
 const mockPalette = {
   palette: {
-    shades: { main: 'rgb(255, 255, 255)' },
     getContrastText: () => 'rgb(0, 0, 0)',
+    shades: { main: 'rgb(255, 255, 255)' },
   },
 };
 
-jest.mock('@custom-react-hooks/use-element-size', () => ({
-  useElementSize: () => ([undefined, { width: 100, height: 200 }]),
+vi.mock('@custom-react-hooks/use-element-size', () => ({
+  useElementSize: () => [undefined, { height: 200, width: 100 }],
 }));
 
 function createWrapper(props) {
