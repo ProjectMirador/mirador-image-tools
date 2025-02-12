@@ -9,7 +9,11 @@
     "dist"
   ],
   "exports": {
-    "./src": "./src/index.js"
+    "./src": "./src/index.js",
+    ".": {
+        "import": "./dist/mirador-image-tools.es.js",
+        "require": "./dist/mirador-image-tools.js"
+    }
   },
   "scripts": {
     "build": "vite build --config vite.config.js",
