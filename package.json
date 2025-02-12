@@ -27,7 +27,7 @@
   },
   "peerDependencies": {
     "@mui/material": "^5.x",
-    "mirador": "^4.0.0-alpha.6",
+    "mirador": "^4.0.0-alpha.10",
     "react": "18.x",
     "react-dom": "18.x"
   },
@@ -51,7 +51,7 @@
     "eslint-plugin-testing-library": "^6.2.0",
     "glob": "^10.3.0",
     "happy-dom": "^15.11.7",
-    "mirador": "^4.0.0-alpha.6",
+    "mirador": "^4.0.0-alpha.10",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "vite": "^6.0.0",
