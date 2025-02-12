@@ -4,14 +4,16 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import TuneSharpIcon from '@mui/icons-material/TuneSharp';
+import { useTranslation } from 'mirador';
 
 const MiradorImageToolsMenuItem = ({
   enabled = true,
   handleClose,
-  t,
   updateWindow,
   windowId,
 }) => {
+  const { t } = useTranslation();
+
   const handleClickOpen = () => {
     handleClose();
     updateWindow(windowId, { imageToolsEnabled: !enabled });
@@ -32,7 +34,6 @@ const MiradorImageToolsMenuItem = ({
 MiradorImageToolsMenuItem.propTypes = {
   enabled: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired,
   updateWindow: PropTypes.func.isRequired,
   windowId: PropTypes.string.isRequired,
 };

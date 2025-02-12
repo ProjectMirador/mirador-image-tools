@@ -11,7 +11,7 @@ import ReplaySharpIcon from '@mui/icons-material/ReplaySharp';
 import { styled, alpha } from '@mui/material/styles';
 import { useElementSize } from '@custom-react-hooks/use-element-size';
 import mergeRefs from 'merge-refs';
-import { MiradorMenuButton } from 'mirador';
+import { MiradorMenuButton, useTranslation } from 'mirador';
 import ImageTool from './ImageTool';
 import ImageRotation from './ImageRotation';
 import ImageFlip from './ImageFlip';
@@ -56,7 +56,6 @@ const MiradorImageTools = ({
   enabled = true,
   open = true,
   innerRef = null,
-  t,
   updateViewport,
   updateWindow,
   viewer = {},
@@ -64,6 +63,7 @@ const MiradorImageTools = ({
   windowId,
 }) => {
   const [isSmallDisplay, setIsSmallDisplay] = useState(false);
+  const { t } = useTranslation();
 
   const {
     flip = false,
@@ -250,7 +250,6 @@ MiradorImageTools.propTypes = {
     PropTypes.any,
   ]),
   open: PropTypes.bool,
-  t: PropTypes.func.isRequired,
   updateViewport: PropTypes.func.isRequired,
   updateWindow: PropTypes.func.isRequired,
   viewConfig: PropTypes.object, // eslint-disable-line react/forbid-prop-types

@@ -23,7 +23,6 @@ function createWrapper(props) {
       windowId="x"
       width="sm"
       theme={mockPalette}
-      t={(k) => k}
       {...props}
     />,
   );
