@@ -43,6 +43,10 @@ export default defineConfig({
           external: [...Object.keys(pkg.peerDependencies || {}), '__tests__/*', '__mocks__/*'],
           output: {
             assetFileNames: 'mirador-image-tools.[ext]',
+            globals: {
+              react: 'React',
+              'react-dom': 'ReactDOM',
+            },
           },
         },
         sourcemap: true,
@@ -61,7 +65,6 @@ export default defineConfig({
         {
           name: 'load-js-files-as-jsx',
           // TODO: rename all our files to .jsx ...
-
           setup(build) {
             build.onLoad({ filter: /(src|__tests__)\/.*\.js$/ }, async (args) => ({
               contents: await fs.readFile(args.path, 'utf8'),
@@ -71,9 +74,6 @@ export default defineConfig({
         },
       ],
     },
-    include: [
-      '@emotion/react',
-    ],
   },
   plugins: [react()],
   resolve: {
