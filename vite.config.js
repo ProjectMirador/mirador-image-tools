@@ -40,7 +40,13 @@ export default defineConfig({
           name: 'MiradorDlPlugin',
         },
         rollupOptions: {
-          external: [...Object.keys(pkg.peerDependencies || {}), '__tests__/*', '__mocks__/*'],
+          external: (id) => {
+            const peers = Object.keys(pkg.peerDependencies);
+            return peers.indexOf(id) > -1
+              || peers.find((peer) => id.startsWith(`${peer}/`))
+              || id.startsWith('__tests__/')
+              || id.startsWith('__mocks__/');
+          },
           output: {
             assetFileNames: 'mirador-image-tools.[ext]',
             globals: {
