@@ -44,6 +44,21 @@ const translations = {
     saturation: 'Saturation',
     show: 'Afficher les outils d\'image',
   },
+  hu: {
+    brightness: 'Fényerő',
+    collapse_close: 'Képeszközök kinyitása',
+    collapse_open: 'Képeszközök összezárása',
+    contrast: 'Kontraszt',
+    flip: 'Tükrözés',
+    greyscale: 'Szürkeárnyalatos',
+    hide: 'Képeszközök elrejtése',
+    invert: 'Színek invertálása',
+    revert: 'Eredeti visszaállítása',
+    rotateLeft: 'Forgatás balra',
+    rotateRight: 'Forgatás jobbra',
+    saturation: 'Színtelítettség',
+    show: 'Képeszközök megjelenítése'
+  },
   it: {
     brightness: 'Luminosità',
     collapse_close: 'Espandi gli strumenti dell\'immagine',
