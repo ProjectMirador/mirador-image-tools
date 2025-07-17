@@ -35,8 +35,8 @@ export default defineConfig({
       build: {
         lib: {
           entry: './src/index.js',
-          fileName: (format) => (format === 'umd' ? 'mirador-image-tools.js' : 'mirador-image-tools.es.js'),
-          formats: ['es', 'umd'],
+          fileName: (format) => (format === 'es' ? 'mirador-image-tools.es.js' : undefined),
+          formats: ['es'],
           name: 'MiradorDlPlugin',
         },
         rollupOptions: {
