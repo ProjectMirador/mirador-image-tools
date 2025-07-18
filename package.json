@@ -2,7 +2,6 @@
   "name": "mirador-image-tools",
   "version": "1.0.0-alpha.3",
   "description": "mirador-image-tools React component",
-  "main": "./dist/mirador-image-tools.js",
   "module": "./dist/mirador-image-tools.es.js",
   "type": "module",
   "files": [
@@ -11,8 +10,7 @@
   "exports": {
     "./src": "./src/index.js",
     ".": {
-        "import": "./dist/mirador-image-tools.es.js",
-        "require": "./dist/mirador-image-tools.js"
+      "import": "./dist/mirador-image-tools.es.js"
     }
   },
   "scripts": {
