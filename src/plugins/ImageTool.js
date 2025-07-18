@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador';
 import Slider from '@mui/material/Slider';

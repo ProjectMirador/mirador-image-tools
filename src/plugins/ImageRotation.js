@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { MiradorMenuButton } from 'mirador';
 import RotateRightIcon from '@mui/icons-material/RotateRight';
