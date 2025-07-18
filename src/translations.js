@@ -57,7 +57,7 @@ const translations = {
     rotateLeft: 'Forgatás balra',
     rotateRight: 'Forgatás jobbra',
     saturation: 'Színtelítettség',
-    show: 'Képeszközök megjelenítése'
+    show: 'Képeszközök megjelenítése',
   },
   it: {
     brightness: 'Luminosità',
