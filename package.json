@@ -25,8 +25,8 @@
   "peerDependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@mui/material": "^7.x",
-    "@mui/system": "^7.x",
+    "@mui/material": "7.x",
+    "@mui/system": "7.x",
     "mirador": "^4.0.0-alpha.17",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0",
@@ -35,8 +35,8 @@
   "devDependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@mui/material": "^7.x",
-    "@mui/system": "^7.x",
+    "@mui/material": "7.x",
+    "@mui/system": "7.x",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.0",
