@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import BrightnessIcon from '@mui/icons-material/Brightness5';
 import TonalityIcon from '@mui/icons-material/Tonality';
