@@ -35,12 +35,18 @@ export default defineConfig({
       build: {
         lib: {
           entry: './src/index.js',
-          fileName: (format) => (format === 'umd' ? 'mirador-image-tools.js' : 'mirador-image-tools.es.js'),
-          formats: ['es', 'umd'],
+          fileName: (format) => (format === 'es' ? 'mirador-image-tools.es.js' : undefined),
+          formats: ['es'],
           name: 'MiradorDlPlugin',
         },
         rollupOptions: {
-          external: [...Object.keys(pkg.peerDependencies || {}), '__tests__/*', '__mocks__/*'],
+          external: (id) => {
+            const peers = Object.keys(pkg.peerDependencies);
+            return peers.indexOf(id) > -1
+              || peers.find((peer) => id.startsWith(`${peer}/`))
+              || id.startsWith('__tests__/')
+              || id.startsWith('__mocks__/');
+          },
           output: {
             assetFileNames: 'mirador-image-tools.[ext]',
             globals: {
