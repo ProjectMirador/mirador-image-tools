@@ -1,4 +1,5 @@
 import React from 'react';
+import { fireEvent } from '@testing-library/react';
 import { render, screen } from './test-utils';
 import { TestableImageTools as MiradorImageTools } from '../src/plugins/MiradorImageTools';
 
@@ -48,5 +49,43 @@ describe('MiradorImageTools', () => {
   it('renders ImageFlip', () => {
     createWrapper();
     expect(screen.getByRole('button', { name: 'flip' })).toBeInTheDocument();
+  });
+});
+
+describe('MiradorImageTools rotation and flip', () => {
+  it('rotateRight calls updateViewport with rotation: 90', () => {
+    const updateViewport = vi.fn();
+    createWrapper({ updateViewport, viewConfig: { flip: false, rotation: 0 } });
+
+    fireEvent.click(screen.getByRole('button', { name: 'rotateRight' }));
+
+    expect(updateViewport).toHaveBeenCalledWith('x', { rotation: 90 });
+  });
+
+  it('rotateLeft calls updateViewport with rotation: -90', () => {
+    const updateViewport = vi.fn();
+    createWrapper({ updateViewport, viewConfig: { flip: false, rotation: 0 } });
+
+    fireEvent.click(screen.getByRole('button', { name: 'rotateLeft' }));
+
+    expect(updateViewport).toHaveBeenCalledWith('x', { rotation: -90 });
+  });
+
+  it('flip calls updateViewport with flip: true', () => {
+    const updateViewport = vi.fn();
+    createWrapper({ updateViewport, viewConfig: { flip: false, rotation: 0 } });
+
+    fireEvent.click(screen.getByRole('button', { name: 'flip' }));
+
+    expect(updateViewport).toHaveBeenCalledWith('x', { flip: true });
+  });
+
+  it('rotateRight with flip active inverts rotation direction', () => {
+    const updateViewport = vi.fn();
+    createWrapper({ updateViewport, viewConfig: { flip: true, rotation: 0 } });
+
+    fireEvent.click(screen.getByRole('button', { name: 'rotateRight' }));
+
+    expect(updateViewport).toHaveBeenCalledWith('x', { rotation: -90 });
   });
 });
