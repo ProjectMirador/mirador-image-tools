@@ -58,6 +58,7 @@
     "mirador": "^4.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-i18next": "^13.0.0 || ^14.0.0 || ^15.0.0",
     "vite": "^6.0.0",
     "vitest": "^3.0.0",
     "vitest-fetch-mock": "^0.4.2"
