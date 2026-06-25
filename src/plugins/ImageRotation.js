@@ -8,11 +8,8 @@ export default class ImageRotation extends Component {
   render() {
     const { label, variant, ...otherProps } = this.props;
     return (
-      <MiradorMenuButton
-        aria-label={label}
-        {...otherProps}
-      >
-        { variant === 'left' ? <RotateLeftIcon /> : <RotateRightIcon /> }
+      <MiradorMenuButton aria-label={label} {...otherProps}>
+        {variant === 'left' ? <RotateLeftIcon /> : <RotateRightIcon />}
       </MiradorMenuButton>
     );
   }

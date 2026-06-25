@@ -5,12 +5,7 @@ import ListItemText from '@mui/material/ListItemText';
 import TuneSharpIcon from '@mui/icons-material/TuneSharp';
 import { useTranslation } from 'mirador';
 
-const MiradorImageToolsMenuItem = ({
-  enabled = true,
-  handleClose,
-  updateWindow,
-  windowId,
-}) => {
+const MiradorImageToolsMenuItem = ({ enabled = true, handleClose, updateWindow, windowId }) => {
   const { t } = useTranslation();
 
   const handleClickOpen = () => {
@@ -23,9 +18,7 @@ const MiradorImageToolsMenuItem = ({
       <ListItemIcon>
         <TuneSharpIcon />
       </ListItemIcon>
-      <ListItemText primaryTypographyProps={{ variant: 'body1' }}>
-        { enabled ? t('hide') : t('show') }
-      </ListItemText>
+      <ListItemText primaryTypographyProps={{ variant: 'body1' }}>{enabled ? t('hide') : t('show')}</ListItemText>
     </MenuItem>
   );
 };

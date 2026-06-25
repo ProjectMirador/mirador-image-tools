@@ -25,11 +25,12 @@ const Root = styled('div')(({ small, theme: { palette } }) => {
   const backgroundColor = palette.shades.main;
   const foregroundColor = palette.getContrastText(backgroundColor);
   const border = `1px solid ${alpha(foregroundColor, 0.2)}`;
-  const borderImageRight = 'linear-gradient('
-    + 'to bottom, '
-    + `${alpha(foregroundColor, 0)} 20%, `
-    + `${alpha(foregroundColor, 0.2)} 20% 80%, `
-    + `${alpha(foregroundColor, 0)} 80% )`;
+  const borderImageRight =
+    'linear-gradient(' +
+    'to bottom, ' +
+    `${alpha(foregroundColor, 0)} 20%, ` +
+    `${alpha(foregroundColor, 0.2)} 20% 80%, ` +
+    `${alpha(foregroundColor, 0)} 80% )`;
   const borderImageBottom = borderImageRight.replace('to bottom', 'to right');
   return {
     backgroundColor: alpha(backgroundColor, 0.8),
@@ -65,14 +66,7 @@ const MiradorImageTools = ({
   const [isSmallDisplay, setIsSmallDisplay] = useState(false);
   const { t } = useTranslation();
 
-  const {
-    flip = false,
-    brightness = 100,
-    contrast = 100,
-    saturate = 100,
-    grayscale = 0,
-    invert = 0,
-  } = viewConfig;
+  const { flip = false, brightness = 100, contrast = 100, saturate = 100, grayscale = 0, invert = 0 } = viewConfig;
 
   const handleChange = (param) => (value) => {
     updateViewport(windowId, { [param]: value });
@@ -98,9 +92,7 @@ const MiradorImageTools = ({
     const controlledFilters = ['brightness', 'contrast', 'saturate', 'grayscale', 'invert'];
 
     const currentFilters = canvas.style.filter.split(' ');
-    const newFilters = currentFilters.filter(
-      (filter) => !controlledFilters.some((type) => filter.includes(type)),
-    );
+    const newFilters = currentFilters.filter((filter) => !controlledFilters.some((type) => filter.includes(type)));
     newFilters.push(`brightness(${brightness}%)`);
     newFilters.push(`contrast(${contrast}%)`);
     newFilters.push(`saturate(${saturate}%)`);
@@ -154,21 +146,9 @@ const MiradorImageTools = ({
         {open && (
           <>
             <ControlContainer small={isSmallDisplay}>
-              <ImageRotation
-                label={t('rotateRight')}
-                onClick={() => toggleRotate(90)}
-                variant="right"
-              />
-              <ImageRotation
-                label={t('rotateLeft')}
-                onClick={() => toggleRotate(-90)}
-                variant="left"
-              />
-              <ImageFlip
-                flipped={flip}
-                label={t('flip')}
-                onClick={toggleFlip}
-              />
+              <ImageRotation label={t('rotateRight')} onClick={() => toggleRotate(90)} variant="right" />
+              <ImageRotation label={t('rotateLeft')} onClick={() => toggleRotate(-90)} variant="left" />
+              <ImageFlip flipped={flip} label={t('flip')} onClick={toggleFlip} />
             </ControlContainer>
             <ControlContainer small={isSmallDisplay}>
               <ImageTool
@@ -228,10 +208,7 @@ const MiradorImageTools = ({
               </ImageTool>
             </ControlContainer>
             <ControlContainer small={isSmallDisplay}>
-              <MiradorMenuButton
-                aria-label={t('revert')}
-                onClick={handleReset}
-              >
+              <MiradorMenuButton aria-label={t('revert')} onClick={handleReset}>
                 <ReplaySharpIcon />
               </MiradorMenuButton>
             </ControlContainer>
@@ -245,15 +222,12 @@ const MiradorImageTools = ({
 
 MiradorImageTools.propTypes = {
   enabled: PropTypes.bool,
-  innerRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.any,
-  ]),
+  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.any]),
   open: PropTypes.bool,
   updateViewport: PropTypes.func.isRequired,
   updateWindow: PropTypes.func.isRequired,
-  viewConfig: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  viewer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  viewConfig: PropTypes.object,
+  viewer: PropTypes.object,
   windowId: PropTypes.string.isRequired,
 };
 

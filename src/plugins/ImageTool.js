@@ -25,10 +25,7 @@ const SliderContainer = styled('div')(({ small, theme: { palette } }) => ({
   zIndex: 100,
 }));
 
-const ImageToolToggleButton = styled(MiradorMenuButton)(({
-  theme: { palette },
-  ownerState: { open, toggled },
-}) => ({
+const ImageToolToggleButton = styled(MiradorMenuButton)(({ theme: { palette }, ownerState: { open, toggled } }) => ({
   ...(toggled && {
     backgroundColor: `${alpha(palette.getContrastText(palette.shades.main), 0.25)} !important`,
   }),
@@ -38,7 +35,16 @@ const ImageToolToggleButton = styled(MiradorMenuButton)(({
 }));
 
 const ImageTool = ({
-  children, label, max = 100, min = 0, value, type, variant = 'slider', windowId, small = false, onChange,
+  children,
+  label,
+  max = 100,
+  min = 0,
+  value,
+  type,
+  variant = 'slider',
+  windowId,
+  small = false,
+  onChange,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -69,12 +75,7 @@ const ImageTool = ({
       </ImageToolToggleButton>
 
       {open && (
-        <SliderContainer
-          id={id}
-          aria-labelledby={`${id}-label`}
-          className="MuiPaper-elevation4"
-          small={small}
-        >
+        <SliderContainer id={id} aria-labelledby={`${id}-label`} className="MuiPaper-elevation4" small={small}>
           <Slider
             orientation={small ? 'horizontal' : 'vertical'}
             min={min}

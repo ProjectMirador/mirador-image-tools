@@ -7,58 +7,57 @@ import { globSync } from 'glob';
 import pkg from './package.json';
 
 /**
-* Vite configuration
-*/
+ * Vite configuration
+ */
 export default defineConfig({
-  ...(
-    process.env.NETLIFY ? {
-      build: {
-        rollupOptions: {
-          external: ['__tests__/*', '__mocks__/*'],
-          input: Object.fromEntries(
-            globSync('./demo/src/*.html').map((file) => [
-              // This remove `src/` as well as the file extension from each
-              // file, so e.g. src/nested/foo.js becomes nested/foo
-              path.relative(
-                'demo/src/',
-                file.slice(0, file.length - path.extname(file).length),
-              ),
-              // This expands the relative paths to absolute paths, so e.g.
-              // src/nested/foo becomes /project/src/nested/foo.js
-              fileURLToPath(new URL(file, import.meta.url)),
-            ]),
-          ),
-        },
-        sourcemap: true,
-      },
-    } : {
-      build: {
-        lib: {
-          entry: './src/index.js',
-          fileName: (format) => (format === 'es' ? 'mirador-image-tools.es.js' : undefined),
-          formats: ['es'],
-          name: 'MiradorDlPlugin',
-        },
-        rollupOptions: {
-          external: (id) => {
-            const peers = Object.keys(pkg.peerDependencies);
-            return peers.indexOf(id) > -1
-              || peers.find((peer) => id.startsWith(`${peer}/`))
-              || id.startsWith('__tests__/')
-              || id.startsWith('__mocks__/');
+  ...(process.env.NETLIFY
+    ? {
+        build: {
+          rollupOptions: {
+            external: ['__tests__/*', '__mocks__/*'],
+            input: Object.fromEntries(
+              globSync('./demo/src/*.html').map((file) => [
+                // This remove `src/` as well as the file extension from each
+                // file, so e.g. src/nested/foo.js becomes nested/foo
+                path.relative('demo/src/', file.slice(0, file.length - path.extname(file).length)),
+                // This expands the relative paths to absolute paths, so e.g.
+                // src/nested/foo becomes /project/src/nested/foo.js
+                fileURLToPath(new URL(file, import.meta.url)),
+              ]),
+            ),
           },
-          output: {
-            assetFileNames: 'mirador-image-tools.[ext]',
-            globals: {
-              react: 'React',
-              'react-dom': 'ReactDOM',
+          sourcemap: true,
+        },
+      }
+    : {
+        build: {
+          lib: {
+            entry: './src/index.js',
+            fileName: (format) => (format === 'es' ? 'mirador-image-tools.es.js' : undefined),
+            formats: ['es'],
+            name: 'MiradorDlPlugin',
+          },
+          rollupOptions: {
+            external: (id) => {
+              const peers = Object.keys(pkg.peerDependencies);
+              return (
+                peers.indexOf(id) > -1 ||
+                peers.find((peer) => id.startsWith(`${peer}/`)) ||
+                id.startsWith('__tests__/') ||
+                id.startsWith('__mocks__/')
+              );
+            },
+            output: {
+              assetFileNames: 'mirador-image-tools.[ext]',
+              globals: {
+                react: 'React',
+                'react-dom': 'ReactDOM',
+              },
             },
           },
+          sourcemap: true,
         },
-        sourcemap: true,
-      },
-    }
-  ),
+      }),
   esbuild: {
     exclude: [],
     // Matches .js and .jsx in __tests__ and .jsx in src
