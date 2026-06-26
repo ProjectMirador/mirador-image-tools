@@ -1,10 +1,4 @@
-import {
-  getContainerId,
-  getWindowConfig,
-  getViewer,
-  updateViewport,
-  updateWindow,
-} from 'mirador';
+import { getContainerId, getWindowConfig, getViewer, updateViewport, updateWindow } from 'mirador';
 import MiradorImageTools from './plugins/MiradorImageTools';
 import MiradorImageToolsMenuItem from './plugins/MiradorImageToolsMenuItem';
 import translations from './translations';

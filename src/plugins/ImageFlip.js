@@ -6,16 +6,10 @@ import { alpha } from '@mui/material/styles';
 
 export default class ImageFlip extends Component {
   render() {
-    const {
-      flipped, label, backgroundColor, foregroundColor, ...otherProps
-    } = this.props;
+    const { flipped, label, backgroundColor, foregroundColor, ...otherProps } = this.props;
 
     return (
-      <MiradorMenuButton
-        aria-label={label}
-        style={{ backgroundColor: flipped && alpha(foregroundColor, 0.25) }}
-        {...otherProps}
-      >
+      <MiradorMenuButton aria-label={label} style={{ backgroundColor: flipped && alpha(foregroundColor, 0.25) }} {...otherProps}>
         <SwapHorizIcon style={{ color: flipped && backgroundColor }} />
       </MiradorMenuButton>
     );
