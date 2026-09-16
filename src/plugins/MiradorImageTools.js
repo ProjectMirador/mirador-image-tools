@@ -8,6 +8,7 @@ import InvertColorsIcon from '@mui/icons-material/InvertColors';
 import TuneSharpIcon from '@mui/icons-material/TuneSharp';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import ReplaySharpIcon from '@mui/icons-material/ReplaySharp';
+import Paper from '@mui/material/Paper';
 import { styled, alpha } from '@mui/material/styles';
 import { useElementSize } from '@custom-react-hooks/use-element-size';
 import mergeRefs from 'merge-refs';
@@ -21,7 +22,7 @@ const SizeContainer = styled('div')(() => ({
 }));
 
 /** Styles for withStyles HOC */
-const Root = styled('div')(({ small, theme: { palette } }) => {
+const Root = styled(Paper)(({ small, theme: { palette } }) => {
   const backgroundColor = palette.shades.main;
   const foregroundColor = palette.getContrastText(backgroundColor);
   const border = `1px solid ${alpha(foregroundColor, 0.2)}`;
@@ -141,7 +142,7 @@ const MiradorImageTools = ({
 
   return (
     <SizeContainer ref={mergeRefs(innerRef, sizeRef)}>
-      <Root className="MuiPaper-elevation4" small={isSmallDisplay}>
+      <Root elevation={4} small={isSmallDisplay}>
         {isSmallDisplay && toggleButton}
         {open && (
           <>
