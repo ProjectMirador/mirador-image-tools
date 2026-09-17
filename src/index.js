@@ -34,3 +34,5 @@ export const miradorImageToolsPlugin = [
     target: 'WindowTopBarPluginMenu',
   },
 ];
+
+export default miradorImageToolsPlugin;
