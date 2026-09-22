@@ -142,7 +142,7 @@ const MiradorImageTools = ({
 
   return (
     <SizeContainer ref={mergeRefs(innerRef, sizeRef)}>
-      <Root elevation={4} small={isSmallDisplay}>
+      <Root aria-label={t('imageTools')} elevation={4} role="menu" small={isSmallDisplay}>
         {isSmallDisplay && toggleButton}
         {open && (
           <>
