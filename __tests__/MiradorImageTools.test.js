@@ -33,6 +33,7 @@ describe('MiradorImageTools', () => {
   it('renders buttons', async () => {
     createWrapper();
 
+    expect(screen.getByRole('menu', { name: 'imageTools' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'brightness' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'contrast' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'saturation' })).toBeInTheDocument();
