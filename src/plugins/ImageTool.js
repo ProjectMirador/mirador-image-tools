@@ -4,25 +4,29 @@ import { MiradorMenuButton } from 'mirador';
 import Slider from '@mui/material/Slider';
 import { styled, alpha } from '@mui/material/styles';
 
-const SliderContainer = styled('div')(({ small, theme: { palette } }) => ({
+const SliderContainer = styled('div')(({ ownerState: { small }, theme: { palette } }) => ({
   backgroundColor: alpha(palette.shades.main, 0.8),
   borderRadius: 25,
   height: 150,
-  marginLeft: 2,
+  marginLeft: 8,
   marginTop: 2,
-  padding: [[2, 7, 2, 7]],
+  paddingTop: 16,
+  paddingBottom: 16,
   position: 'absolute',
+  top: 48,
+  zIndex: 100,
   ...(small && {
     height: 'auto',
     marginBottom: 2,
-    marginTop: -46,
-    padding: [[4, 2, 4, 2]],
-    right: 48,
+    marginTop: -40,
+    paddingTop: 2,
+    paddingBottom: 2,
+    paddingLeft: 16,
+    paddingRight: 16,
+    right: 52,
     top: 'auto',
     width: 150,
   }),
-  top: 48,
-  zIndex: 100,
 }));
 
 const ImageToolToggleButton = styled(MiradorMenuButton)(({ theme: { palette }, ownerState: { open, toggled } }) => ({
@@ -75,7 +79,7 @@ const ImageTool = ({
       </ImageToolToggleButton>
 
       {open && (
-        <SliderContainer id={id} aria-labelledby={`${id}-label`} className="MuiPaper-elevation4" small={small}>
+        <SliderContainer id={id} aria-labelledby={`${id}-label`} className="MuiPaper-elevation4" ownerState={{ small }}>
           <Slider
             orientation={small ? 'horizontal' : 'vertical'}
             min={min}

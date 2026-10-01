@@ -18,7 +18,7 @@ const MiradorImageToolsMenuItem = ({ enabled = true, handleClose, updateWindow, 
       <ListItemIcon>
         <TuneSharpIcon />
       </ListItemIcon>
-      <ListItemText primaryTypographyProps={{ variant: 'body1' }}>{enabled ? t('hide') : t('show')}</ListItemText>
+      <ListItemText slotProps={{ primary: { variant: 'body1' } }}>{enabled ? t('hide') : t('show')}</ListItemText>
     </MenuItem>
   );
 };
