@@ -1,5 +1,5 @@
-import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { useElementSize } from '@custom-react-hooks/use-element-size';
 import { render, screen } from './test-utils';
 import { TestableImageTools as MiradorImageTools } from '../src/plugins/MiradorImageTools';
 
@@ -11,7 +11,7 @@ const mockPalette = {
 };
 
 vi.mock('@custom-react-hooks/use-element-size', () => ({
-  useElementSize: () => [undefined, { height: 200, width: 100 }],
+  useElementSize: vi.fn(() => [undefined, { height: 200, width: 100 }]),
 }));
 
 function createWrapper(props) {
@@ -41,15 +41,26 @@ describe('MiradorImageTools', () => {
     expect(screen.getByRole('button', { name: 'invert' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'revert' })).toBeInTheDocument();
   });
+
   it('renders ImageRotation', () => {
     createWrapper();
 
     expect(screen.getByRole('button', { name: 'rotateLeft' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'rotateRight' })).toBeInTheDocument();
   });
+
   it('renders ImageFlip', () => {
     createWrapper();
     expect(screen.getByRole('button', { name: 'flip' })).toBeInTheDocument();
+  });
+
+  it('renders on wide viewports without `small` DOM attribute errors', () => {
+    vi.mocked(useElementSize).mockReturnValue([undefined, { height: 200, width: 800 }]);
+    createWrapper();
+
+    expect(screen.getByRole('menu', { name: 'imageTools' })).not.toHaveAttribute('small');
+
+    vi.mocked(useElementSize).mockReturnValue([undefined, { height: 200, width: 100 }]);
   });
 });
 
