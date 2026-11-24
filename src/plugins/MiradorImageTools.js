@@ -22,7 +22,7 @@ const SizeContainer = styled('div')(() => ({
 }));
 
 /** Styles for withStyles HOC */
-const Root = styled(Paper)(({ small, theme: { palette } }) => {
+const Root = styled(Paper)(({ ownerState: { small }, theme: { palette } }) => {
   const backgroundColor = palette.shades.main;
   const foregroundColor = palette.getContrastText(backgroundColor);
   const border = `1px solid ${alpha(foregroundColor, 0.2)}`;
@@ -47,7 +47,7 @@ const Root = styled(Paper)(({ small, theme: { palette } }) => {
   };
 });
 
-const ControlContainer = styled('div')(({ small }) => ({
+const ControlContainer = styled('div')(({ ownerState: { small } }) => ({
   border: 0,
   borderImageSlice: 1,
   display: 'flex',
@@ -118,7 +118,7 @@ const MiradorImageTools = ({
   const [sizeRef, size] = useElementSize();
 
   useEffect(() => {
-    setIsSmallDisplay(size.width && size.width < 480);
+    setIsSmallDisplay(Boolean(size.width && size.width < 480));
   }, [size.width]);
 
   useEffect(() => {
@@ -142,16 +142,16 @@ const MiradorImageTools = ({
 
   return (
     <SizeContainer ref={mergeRefs(innerRef, sizeRef)}>
-      <Root aria-label={t('imageTools')} elevation={4} role="menu" small={isSmallDisplay}>
+      <Root aria-label={t('imageTools')} elevation={4} role="menu" ownerState={{ small: isSmallDisplay }}>
         {isSmallDisplay && toggleButton}
         {open && (
           <>
-            <ControlContainer small={isSmallDisplay}>
+            <ControlContainer ownerState={{ small: isSmallDisplay }}>
               <ImageRotation label={t('rotateRight')} onClick={() => toggleRotate(90)} variant="right" />
               <ImageRotation label={t('rotateLeft')} onClick={() => toggleRotate(-90)} variant="left" />
               <ImageFlip flipped={flip} label={t('flip')} onClick={toggleFlip} />
             </ControlContainer>
-            <ControlContainer small={isSmallDisplay}>
+            <ControlContainer ownerState={{ small: isSmallDisplay }}>
               <ImageTool
                 type="brightness"
                 label={t('brightness')}
@@ -208,7 +208,7 @@ const MiradorImageTools = ({
                 <InvertColorsIcon />
               </ImageTool>
             </ControlContainer>
-            <ControlContainer small={isSmallDisplay}>
+            <ControlContainer ownerState={{ small: isSmallDisplay }}>
               <MiradorMenuButton aria-label={t('revert')} onClick={handleReset}>
                 <ReplaySharpIcon />
               </MiradorMenuButton>
